@@ -5,6 +5,8 @@ Just in... for Android
 Info
 ----
 
+Just in... is a Twitter reader for Android. It makes use of Open GL ES 2.0 to visualize your Twitter timeline in a 3D stream.
+
 - App download: [https://market.android.com/details?id=org.timur.justin](https://market.android.com/details?id=org.timur.justin)
 
 - App home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
@@ -17,7 +19,7 @@ Initial build setup
 
 $ cp local.properties.sample local.properties
 
-- Adjust SDK path settings in "local.properties" if ncecessary
+- Adjust SDK path settings in "local.properties" if necessary
 
 $ cp src/org/timur/justin/Constants.java.sample src/org/timur/justin/Constants.java
 
@@ -25,12 +27,18 @@ $ cp src/org/timur/justin/Constants.java.sample src/org/timur/justin/Constants.j
   src/org/timur/justin/Constants.java
   
   You can apply for these keys here: https://dev.twitter.com/anywhere/apps/new
+
+- Retrieve a required library from github:
   
 $ cd libs
 
 $ wget --no-check-certificate http://github.com/VodafoneGroup/AlwaysOnTwitter/blob/master/twitterservice.jar?raw=true
 
 $ cd ..
+
+  twitterservice.jar contains the service component that talks to Twitter.
+  
+  Sourcecode for this component is available at [http://github.com/VodafoneGroup/AlwaysOnTwitter/](http://github.com/VodafoneGroup/AlwaysOnTwitter/)
   
 - Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar"
   must never be contributed back to the online repository.
