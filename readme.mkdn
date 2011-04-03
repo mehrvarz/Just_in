@@ -5,9 +5,9 @@ Just in... for Android
 Info
 ----
 
-- app download: https://market.android.com/details?id=org.timur.justin
+- app download: [https://market.android.com/details?id=org.timur.justin](https://market.android.com/details?id=org.timur.justin)
 
-- app home page: http://timur.mobi/justin/
+- app home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
 
 - [more to be added here]
 
