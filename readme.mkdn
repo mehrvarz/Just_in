@@ -20,7 +20,7 @@ Source code is licensed under the Apache License, Version 2.0:
 
   http://www.apache.org/licenses/LICENSE-2.0.html
 
-Just in... makes use of the following open source 3rd party components:
+Making use of the following open source 3rd party components:
 
 - [AlwaysOnTwitter](http://github.com/VodafoneGroup/AlwaysOnTwitter/) by Vodafone Group 
 
