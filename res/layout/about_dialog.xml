@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 Timur Mehrvarz Duesseldorf
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/buttonLayout"
+  android:layout_width="420px"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:padding="12dip">
+
+  <ScrollView
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="12px"
+    android:layout_marginBottom="12px"
+    android:layout_marginLeft="8px"
+    android:layout_marginRight="7px"
+    android:scrollbarSize="0px"
+    android:scrollbars="none">
+
+    <LinearLayout 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:gravity="fill"
+    >
+      <TextView
+        android:id="@+id/aboutText"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="6px"
+        android:layout_marginBottom="0px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="21sp"
+        android:text="Just in... for Android"
+      />
+
+      <TextView
+        android:id="@+id/aboutVersion"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+      />  <!-- at runtime this will be filled with android:versionName from the manifest and build date+time -->
+
+      <TextView
+        android:id="@+id/aboutText5a"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="(c) 2011 Timur Mehrvarz"
+      />
+
+      <TextView
+        android:id="@+id/aboutText5b"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="This application does not collect or transmit any information from users"
+      />
+
+      <TextView
+        android:id="@+id/aboutText5c"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="This application does not use or transmit your location information"
+      />
+
+      <TextView
+        android:id="@+id/aboutText5d"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="This application does not make use of analytic technologies"
+      />
+
+      <TextView
+        android:id="@+id/aboutText3a"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="The following 3rd party components are being used:"
+      />
+
+      <TextView
+        android:id="@+id/aboutText3b"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="6px"
+        android:layout_marginBottom="0px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="1. Twitter4J library (c)2007 Yusuke Yamamoto, http://twitter4j.org, open source"
+      />
+
+      <TextView
+        android:id="@+id/aboutText3c"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="6px"
+        android:layout_marginBottom="0px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="2. AlwaysOnTwitter service (c)2011 Vodafone Group, http://github.com/VodafoneGroup, open source"
+      />
+
+      <TextView
+        android:id="@+id/aboutText5e"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="We are in the process of open sourcing all parts of this application - More info: http://timur.mobi/justin"
+      />
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>
+
