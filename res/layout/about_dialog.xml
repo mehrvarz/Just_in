@@ -115,6 +115,19 @@
       />
 
       <TextView
+        android:id="@+id/aboutText5e"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8px"
+        android:layout_marginBottom="4px"
+        android:lineSpacingExtra="4sp"
+        android:textColor="#eef"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="This application has been fully open sourced - More info: github.com/mehrvarz"
+      />
+
+      <TextView
         android:id="@+id/aboutText3a"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -124,20 +137,7 @@
         android:textColor="#eef"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:text="The following 3rd party components are being used:"
-      />
-
-      <TextView
-        android:id="@+id/aboutText3b"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="6px"
-        android:layout_marginBottom="0px"
-        android:lineSpacingExtra="4sp"
-        android:textColor="#eef"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:text="1. Twitter4J library (c)2007 Yusuke Yamamoto, http://twitter4j.org, open source"
+        android:text="The following open source 3rd party components are being used:"
       />
 
       <TextView
@@ -150,23 +150,24 @@
         android:textColor="#eef"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:text="2. AlwaysOnTwitter service (c)2011 Vodafone Group, http://github.com/VodafoneGroup, open source"
+        android:text="1. AlwaysOnTwitter service (c)2011 Vodafone Group, github.com/VodafoneGroup"
       />
 
       <TextView
-        android:id="@+id/aboutText5e"
+        android:id="@+id/aboutText3b"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginTop="8px"
-        android:layout_marginBottom="4px"
+        android:layout_marginTop="6px"
+        android:layout_marginBottom="0px"
         android:lineSpacingExtra="4sp"
         android:textColor="#eef"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:text="We are in the process of open sourcing all parts of this application - More info: http://timur.mobi/justin"
+        android:text="2. Twitter4J library (c)2007 Yusuke Yamamoto, twitter4j.org"
       />
 
     </LinearLayout>
   </ScrollView>
 </LinearLayout>
+
 
