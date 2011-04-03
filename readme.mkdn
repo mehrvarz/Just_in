@@ -47,8 +47,7 @@ $ wget --no-check-certificate http://github.com/VodafoneGroup/AlwaysOnTwitter/bl
 
 $ cd ..
 
-- Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar"
-  must never be contributed back to the online repository.
+(Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar" must never be contributed back to the online repository.)
 
 
 Building
