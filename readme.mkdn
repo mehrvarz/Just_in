@@ -30,6 +30,8 @@ Just in... makes use of the following open source 3rd party components:
 Initial build setup
 -------------------
 
+Building requires Android SDK version-8 "Froyo", JDK 6 and Ant 1.8.2.
+
 $ cp local.properties.sample local.properties
 
 - Adjust SDK path settings in "local.properties" if necessary
@@ -47,9 +49,11 @@ $ cd libs
 
 $ wget --no-check-certificate http://github.com/VodafoneGroup/AlwaysOnTwitter/blob/master/twitterservice.jar?raw=true
 
+  (Make sure the file is named "twitterservice.jar")
+
 $ cd ..
 
-(Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar" must never be contributed back to the online repository.)
+  (Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar" must never be contributed back to the online repository.)
 
 
 Building
