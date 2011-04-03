@@ -5,9 +5,9 @@ Just in... for Android
 Info
 ----
 
-- app download: [https://market.android.com/details?id=org.timur.justin](https://market.android.com/details?id=org.timur.justin)
+- App download: [https://market.android.com/details?id=org.timur.justin](https://market.android.com/details?id=org.timur.justin)
 
-- app home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
+- App home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
 
 - [more to be added here]
 
@@ -32,8 +32,8 @@ $ wget --no-check-certificate http://github.com/VodafoneGroup/AlwaysOnTwitter/bl
 
 $ cd ..
   
-- Please note that "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar"
-  should never be contributed back to the online repository
+- Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar"
+  must never be contributed back to the online repository.
 
 
 Building
