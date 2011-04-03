@@ -19,9 +19,9 @@ Copyright (C) 2011 Timur Mehrvarz.
 
 Just in... makes use of the following open source 3rd party components:
 
-- "AlwaysOnTwitter" by Vodafone Group 
+- [AlwaysOnTwitter](http://github.com/VodafoneGroup/AlwaysOnTwitter/) by Vodafone Group 
 
-- "Twitter4J" by Yusuke Yamamoto
+- [Twitter4J](http://twitter4j.org) by Yusuke Yamamoto
 
 
 Initial build setup
@@ -38,7 +38,7 @@ $ cp src/org/timur/justin/Constants.java.sample src/org/timur/justin/Constants.j
   
   You can apply for these keys here: https://dev.twitter.com/anywhere/apps/new
 
-- Retrieve a required library from github:
+- Retrieve a required twitterservice.jar library from github:
   
 $ cd libs
 
@@ -46,10 +46,6 @@ $ wget --no-check-certificate http://github.com/VodafoneGroup/AlwaysOnTwitter/bl
 
 $ cd ..
 
-  twitterservice.jar contains the service component that talks to Twitter.
-  
-  Sourcecode for this component is available at [http://github.com/VodafoneGroup/AlwaysOnTwitter/](http://github.com/VodafoneGroup/AlwaysOnTwitter/)
-  
 - Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar"
   must never be contributed back to the online repository.
 
