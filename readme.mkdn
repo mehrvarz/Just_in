@@ -7,11 +7,10 @@ Info
 
 Just in... is a Twitter reader for Android. It makes use of Open GL ES 2.0 to visualize your Twitter timeline in a 3D stream.
 
-- App download: [https://market.android.com/details?id=org.timur.justin](https://market.android.com/details?id=org.timur.justin)
+Download: [https://market.android.com/details?id=org.timur.justin](https://market.android.com/details?id=org.timur.justin)
 
-- App home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
+Home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
 
-- [more info to be added here]
 
 
 Initial build setup
