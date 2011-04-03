@@ -5,7 +5,11 @@ Just in... for Android
 Info
 ----
 
-- [to be added here]
+- app download: https://market.android.com/details?id=org.timur.justin
+
+- app home page: http://timur.mobi/justin/
+
+- [more to be added here]
 
 
 Initial build setup
