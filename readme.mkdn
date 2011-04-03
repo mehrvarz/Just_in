@@ -14,9 +14,11 @@ Download Android apk: [https://market.android.com/details?id=org.timur.justin](h
 
 App home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
 
-Source code is licensed under the Apache License, Version 2.0.
+Copyright (C) 2011 Timur Mehrvarz
 
-Copyright (C) 2011 Timur Mehrvarz.
+Source code is licensed under the Apache License, Version 2.0:
+
+  http://www.apache.org/licenses/LICENSE-2.0.html
 
 Just in... makes use of the following open source 3rd party components:
 
