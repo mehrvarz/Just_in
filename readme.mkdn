@@ -11,7 +11,7 @@ Just in... is a Twitter reader for Android. It makes use of Open GL ES 2.0 to vi
 
 - App home page: [http://timur.mobi/justin/](http://timur.mobi/justin/)
 
-- [more to be added here]
+- [more info to be added here]
 
 
 Initial build setup
