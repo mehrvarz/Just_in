@@ -51,6 +51,6 @@ $ ./deploy
 Viewing the logs at runtime
 ---------------------------
 
-$ adb logcat |grep -E "JustIn|GlTicker|WebView|dalvikvm|Twitter|OAuthActivity|ShowTouchAreaView|CurrentPositionView|ServiceClient|JsObject|AndroidRuntime|Console|JavaBinder|err|DEBUG"
+$ adb logcat |grep -E "JustIn|GlTicker|WebView|dalvikvm|Twitter|OAuthActivity|ShowTouchAreaView|CurrentPositionView|ServiceClient|JsObject|AndroidRuntime|DEBUG"
 
 
