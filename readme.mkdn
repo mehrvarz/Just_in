@@ -49,11 +49,21 @@ $ cd libs
 
 $ wget --no-check-certificate http://github.com/VodafoneGroup/AlwaysOnTwitter/blob/master/twitterservice.jar?raw=true
 
-  (Make sure the file is named "twitterservice.jar")
+  Make sure the file is named "twitterservice.jar"
+  
+$ wget http://twitter4j.org/en/twitter4j-android-2.2.1.zip
+
+  Unzip this archive and place only the following two files in the local libs/ folder:
+  
+  1. twitter4j-core-android-2.2.1.jar
+
+  2. twitter4j-stream-android-2.2.1.jar
+  
+  Together with twitterservice.jar you should now have three jars in your libs/ folder.
 
 $ cd ..
 
-  (Please note that the files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar" must never be contributed back to the online repository.)
+  (Please note that the JAR files as well as the following text files: "local.properties", "src/org/timur/justin/Constants.java" and "libs/twitterservice.jar" must never be contributed back to the online repository.)
 
 
 Building
