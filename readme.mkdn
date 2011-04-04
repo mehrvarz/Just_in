@@ -59,7 +59,9 @@ $ cd ..
 Building
 --------
 
-$ ./build
+$ ./make
+
+This will build a debug version of the application in bin/JustIn.apk. 
 
 
 Installation and remote execution
@@ -67,10 +69,12 @@ Installation and remote execution
 
 $ ./deploy
 
+This will install (replace) the app on your Android device and remote execute it.
+ 
 
 Viewing the logs at runtime
 ---------------------------
 
-$ adb logcat |grep -E "JustIn|GlTicker|WebView|dalvikvm|Twitter|OAuthActivity|ShowTouchAreaView|CurrentPositionView|ServiceClient|JsObject|AndroidRuntime|DEBUG"
+$ adb logcat |grep -E "JustIn|GlTicker|WebView|dalvikvm|Twitter|OAuth|ShowTouch|CurrentPosition|ServiceClient|JsObject|Android|DEBUG"
 
 
