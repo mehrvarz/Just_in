@@ -73,10 +73,10 @@
     -->
     <setup/>
 
-    <target name="-pre-compile">
+    <!--target name="-pre-compile">
       <delete file="./libs/twitterservice.jar" />
       <copy file="../AlwaysOnTwitter-github-VodafoneGroup/bin/twitterservice.jar" tofile="./libs/twitterservice.jar" />
-    </target>
+    </target-->
 
 </project>
 
