@@ -77,6 +77,5 @@
       <delete file="./libs/twitterservice.jar" />
       <copy file="../AlwaysOnTwitter-github-VodafoneGroup/bin/twitterservice.jar" tofile="./libs/twitterservice.jar" />
     </target-->
-
 </project>
 
