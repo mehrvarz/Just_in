@@ -18,7 +18,7 @@
     <delete file="AndroidManifest.xml" />
     <copy file="AndroidManifest-orig.xml" tofile="AndroidManifest.xml" />
     <tstamp>
-      <format property="buildtime" pattern="yyyy-MM-dd HH:mm"/>
+      <format property="buildtime" pattern="yyyy-MM-dd"/>
     </tstamp>
     <replace token="$buildtime" value="${buildtime}" file="AndroidManifest.xml"/>
   </target>
