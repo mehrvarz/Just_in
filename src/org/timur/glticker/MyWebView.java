@@ -265,20 +265,17 @@ public class MyWebView extends WebView
 
       private Bitmap takeSnapshot(WebView webView)
       {
-        //if(Config.LOGD) Log.i(LOGTAG, "takeSnapshot() webView="+webView);
         if(webView!=null) {
           Picture picture = webView.capturePicture();
           if(picture.getWidth()>0 && picture.getHeight()>0) {
-            Process.setThreadPriority(Process.THREAD_PRIORITY_LOWEST); // to make UI/GL threads smoother
+            Process.setThreadPriority(Process.THREAD_PRIORITY_LOWEST); // make UI/GL threads smoother
 
-            int newBitmapWidth = picture.getWidth(); //Math.min(picture.getWidth(), Math.min(webView.getWidth(),webView.getHeight()));
-            int newBitmapHeight = picture.getHeight(); //Math.min(picture.getHeight(), Math.max(webView.getWidth(),webView.getHeight()));
+            int newBitmapWidth = picture.getWidth();
+            int newBitmapHeight = picture.getHeight();
             //if(Config.LOGD) Log.d(LOGTAG, "takeSnapshot() picture.getHeight()="+picture.getHeight()+"/"+newBitmapHeight+" picture.getWidth()="+picture.getWidth()+"/"+newBitmapWidth);
 
-            newBitmapHeight = Math.min(newBitmapHeight, ((MyWebView)webView).jsObject.renderHeight);   // renderHeight = the actual used height (NOT RELIABLE)
+            newBitmapHeight = Math.min(newBitmapHeight, ((MyWebView)webView).jsObject.renderHeight+5);   // renderHeight = the actual used height
             newBitmapHeight = Math.max(newBitmapHeight,webView.getHeight());
-            // todo: well, unfortunately, jsObject.renderHeight is not reliable if images are in the webpage
-            //       now would be the time to call JS and have it fetch offsetHeight 
 
             //if(Config.LOGD) Log.i(LOGTAG,String.format("inst=%d takeSnapshot() newBitmapHeight=%d  webView.getWidth()=%d webView.getHeight()=%d",
             //  inst,newBitmapHeight,webView.getWidth(),webView.getHeight(),((MyWebView)webView).jsObject.renderHeight));

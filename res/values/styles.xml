@@ -25,5 +25,13 @@
 		<item name="android:textStyle">normal</item>
 		<item name="android:background">@drawable/button_background</item>
 	</style>
+
+	<style name="dialogTextAppearence.HighlightButton" parent="@android:style/TextAppearance">
+		<item name="android:textColor">#ddd</item>
+		<item name="android:typeface">sans</item>
+		<item name="android:textSize">21dip</item>
+		<item name="android:textStyle">normal</item>
+		<item name="android:background">@drawable/highlight_button_background</item>
+	</style>
 </resources>
 

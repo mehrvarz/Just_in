@@ -13,7 +13,7 @@ body {
   background-color:rgba(0,0,0,1.0);
   color:#fff;
   font-family: Lucida Sans Unicode, Lucida Grande, Arial, Verdana, Helvetica, Geneva, sans-serif;
-  font-size: 150%;
+  font-size: 145%;
   font-weight:550;  /* 400 = normal, 700 = bold */
   line-height:130%;
 }
@@ -49,18 +49,15 @@ a:hover {
   margin-right:0.4em;
   float:left;
   min-width:96px;   /* double the expected size of a twitter icon */
-  _max-width:144px;
   max-width:192px;
-	_max-height:50%;
 }
 
 /* source / channel name */
 h3 {
-  font-size: 75%;
+  font-size: 70%;
   font-weight:normal;
   margin-top:0.1em;
   margin-bottom:0.1em;
-  _float:left;
 }
 
 /* title */

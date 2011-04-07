@@ -563,7 +563,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
 
             Intent sendMailIntent = new Intent(Intent.ACTION_SEND);
             sendMailIntent.putExtra(Intent.EXTRA_SUBJECT, "Just in... for Android");
-            sendMailIntent.putExtra(Intent.EXTRA_TEXT, "Free 'Just in...' 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin");
+            sendMailIntent.putExtra(Intent.EXTRA_TEXT, "'Just in...' free 3D Twitter reader in the Android Market\nhttp://market.android.com/details?id=org.timur.justin");
             sendMailIntent.setType("message/rfc822");                       
             startActivity(sendMailIntent);
 
@@ -580,7 +580,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
 
             Uri smsUri = Uri.parse("smsto:");
             Intent sendSmsIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
-            sendSmsIntent.putExtra("sms_body", "Free 'Just in...' 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin");
+            sendSmsIntent.putExtra("sms_body", "'Just in...' free 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin");
             //sendSmsIntent.setType("vnd.android-dir/mms-sms");
             try {
               startActivity(sendSmsIntent);
@@ -632,7 +632,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
                   AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                   alertDialogBuilder.setTitle("Tweet");
                   //alertDialogBuilder.setMessage("");
-                  editText.setText("Free 'Just in...' 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin",TextView.BufferType.EDITABLE);
+                  editText.setText("'Just in...' free #3D #Twitter reader in the #Android Market http://market.android.com/details?id=org.timur.justin",TextView.BufferType.EDITABLE);
                   // todo: should show length of message (or rather: 140 - number of characters)
                   alertDialogBuilder.setView(editText);
                   alertDialogBuilder.setPositiveButton("Send",dialogClickListener).setNegativeButton("Abort", dialogClickListener).show();

@@ -56,11 +56,17 @@ function onload() {
   }
 }
 
-function onImageLoad(img) {
-  var width = img.width;
-  var height = img.height;
-  console.log("onImageLoad() width="+width+" height="+height+" newMsgElement.offsetHeight="+newMsgElement.offsetHeight+" ----");
-  window.JsObject.setRenderHeight(newMsgElement.offsetHeight);
+//function onImageLoad(img) {
+//  var width = img.width;
+//  var height = img.height;
+//  console.log("onImageLoad() width="+width+" height="+height+" newMsgElement.offsetHeight="+newMsgElement.offsetHeight+" ----");
+//  window.JsObject.setRenderHeight2(newMsgElement.offsetHeight);
+//}
+
+function onImageLoad() {
+  var newTotalHeight = newMsgElement.offsetHeight;
+  console.log("onImageLoad() newMsgElement.offsetHeight="+newTotalHeight+" ----");
+  window.JsObject.setRenderHeight2(newTotalHeight);
 }
 
 function layoutStart() {
@@ -145,17 +151,17 @@ function layoutNewMessage(title, contactname, description, bgcolor, provider, ur
 
     if(title.indexOf("<a")>=0) {
       insertMarkup += "<h3>"+contactname+" "+msgHourMinutesString+"</h3>"+
-                      "<p><img class='"+iconClass+"' src='"+iconUrl+"'/>"+title+"</p>";
+                      "<p><img class='"+iconClass+"' src='"+iconUrl+"' onload='onImageLoad()'/>"+title+"</p>";
     }
     else {
       insertMarkup += "<h3>"+contactname+" "+msgHourMinutesString+"</h3>"+
-                      "<a href='"+xmlEncode(urlString)+"'><h2><img class='"+iconClass+"' src='"+iconUrl+"'/>"+title+"</h2></a>";
+                      "<a href='"+xmlEncode(urlString)+"'><h2><img class='"+iconClass+"' src='"+iconUrl+"' onload='onImageLoad()'/>"+title+"</h2></a>";
     }
   } else {
     //console.log("layoutNewMessage() no urlString, idNumber="+idNumber+" title="+window.JsObject.getEntryTitle()+" channelName="+window.JsObject.getEntryChannel());
     insertMarkup += "<h3>"+contactname+" "+msgHourMinutesString+"</h3><h2>";
     if(imageUrl!=null)
-      insertMarkup += "<img class='icon' src='"+imageUrl+"'/>";
+      insertMarkup += "<img class='icon' src='"+imageUrl+"' onload='onImageLoad()'/>";
     insertMarkup += ""+title+"</h2>";
   }
 
@@ -165,7 +171,7 @@ function layoutNewMessage(title, contactname, description, bgcolor, provider, ur
   }
 
   if(!description) // mainly for twitter msgs: enlarging text size of short messages
-    insertMarkup = "<div style='line-height:120%;font-size:120%;'>"+insertMarkup+"<p><br/>&nbsp;</p></div>";
+    insertMarkup = "<div style='line-height:120%;font-size:120%;'><p><br/><br/></p>"+insertMarkup+"<p>&nbsp; <br/> &nbsp;<br/> &nbsp;<br/></p></div>";
 
   newMsgElement.innerHTML = insertMarkup;
 
