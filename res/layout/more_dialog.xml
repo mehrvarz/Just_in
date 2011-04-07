@@ -59,6 +59,14 @@
     />
 
     <Button
+      android:id="@+id/buttonPromote"
+      android:text="Promote"
+      android:layout_width="fill_parent"
+      android:layout_height="10mm"
+      style="@style/dialogTextAppearence.Button"
+    />
+
+    <Button
       android:id="@+id/buttonClose"
       android:text="Close"
       android:layout_width="fill_parent"

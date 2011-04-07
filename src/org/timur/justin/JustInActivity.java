@@ -122,6 +122,8 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
 
   ///////////////////////////////////////////////////////////////// popup menu
 
+  public static final int DIALOG_PROMOTE = 10;
+
   @Override
   public Dialog onCreateDialog(final int id) {
     Dialog menuDialog = null;
@@ -148,6 +150,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
       return menuDialog;
     } 
 
+
     final GradientDrawable mBackgroundGradient =
           new GradientDrawable(
                   GradientDrawable.Orientation.TOP_BOTTOM,
@@ -161,97 +164,6 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
     if(id==DIALOG_USE_MSG) {
       menuDialog.setContentView(R.layout.open_dialog);
       menuDialog.findViewById(R.id.buttonLayout).setBackgroundDrawable(mBackgroundGradient);
-
-      // Browse...
-      Button btnBrowse = (Button)menuDialog.findViewById(R.id.buttonOpenBrowse);
-      if(btnBrowse!=null) {
-        btnBrowse.setOnClickListener(new View.OnClickListener() {
-          public void onClick(View view) { 
-            if(Config.LOGD) Log.i(LOGTAG, "btnBrowse currentEntryTopic="+currentEntryTopic);
-            if(currentEntryTopic!=null) {
-              glView.openCurrentMsgInBrowser(currentEntryTopic);
-            }
-            dismissDialog(id);
-          } 
-        });
-      }
-
-      // Send by Mail
-      Button btnEmail = (Button)menuDialog.findViewById(R.id.buttonOpenEmail);
-      if(btnEmail!=null) {
-        btnEmail.setOnClickListener(new View.OnClickListener() {
-          public void onClick(View view) { 
-            if(Config.LOGD) Log.i(LOGTAG, "btnEmail currentEntryTopic="+currentEntryTopic);
-            if(currentEntryTopic!=null && currentEntryTopic.title!=null) {
-              Intent sendMailIntent = new Intent(Intent.ACTION_SEND);
-              sendMailIntent.putExtra(Intent.EXTRA_SUBJECT, currentEntryTopic.channelName + ": " + ripTags(currentEntryTopic.title).substring(0,40)+"...");
-              sendMailIntent.putExtra(Intent.EXTRA_TEXT, ripTags(currentEntryTopic.title));
-              sendMailIntent.setType("message/rfc822");                       
-              startActivity(sendMailIntent);
-            }
-            dismissDialog(id);
-          } 
-        });
-      }
-
-      // Send by SMS
-      Button btnSMS = (Button)menuDialog.findViewById(R.id.buttonOpenSMS);
-      if(btnSMS!=null) {
-        btnSMS.setOnClickListener(new View.OnClickListener() {
-          public void onClick(View view) { 
-            if(Config.LOGD) Log.i(LOGTAG, "btnSMS currentEntryTopic="+currentEntryTopic);
-            if(currentEntryTopic!=null) {
-              Uri smsUri = Uri.parse("smsto:");
-              Intent sendSmsIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
-              sendSmsIntent.putExtra("sms_body", currentEntryTopic.channelName + ": " + ripTags(currentEntryTopic.title));
-              //sendSmsIntent.setType("vnd.android-dir/mms-sms");
-              try {
-                startActivity(sendSmsIntent);
-              } catch(Exception ex) {
-                String errMsg = ex.getMessage();
-                Toast.makeText(context, errMsg, Toast.LENGTH_LONG).show();
-              }
-            }
-            dismissDialog(id);
-          } 
-        });
-      }
-
-//      // bluetooth
-//      Button btnBluetooth = (Button)menuDialog.findViewById(R.id.buttonOpenBluetooth);
-//      if(btnBluetooth!=null) {
-//        btnBluetooth.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) { 
-//              if(currentEntryTopic!=null) {
-//                // todo: must implement
-//                Toast.makeText(context, "bluetooth not yet implemented", Toast.LENGTH_LONG).show();
-//              }
-//              dismissDialog(id);
-//            } 
-//          }
-//        );
-//      }
-
-      // close
-      Button btnClose = (Button)menuDialog.findViewById(R.id.buttonClose);
-      if(btnClose!=null) {
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) { 
-              dismissDialog(id);
-            } 
-          }
-        );
-      }
-
-    } 
-    else
-    if(id==DIALOG_MORE) {
-      menuDialog.setContentView(R.layout.more_dialog);
-      menuDialog.findViewById(R.id.buttonLayout).setBackgroundDrawable(mBackgroundGradient);
-    }
-
-
-    if(id==DIALOG_USE_MSG) {
 
       // tweet
       Button btnTweetReply = (Button)menuDialog.findViewById(R.id.buttonOpenTweetReply);
@@ -399,8 +311,93 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
           } 
         });
       }
-    }
-    else if(id==DIALOG_MORE) {
+
+      // Browse...
+      Button btnBrowse = (Button)menuDialog.findViewById(R.id.buttonOpenBrowse);
+      if(btnBrowse!=null) {
+        btnBrowse.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) { 
+            if(Config.LOGD) Log.i(LOGTAG, "btnBrowse currentEntryTopic="+currentEntryTopic);
+            if(currentEntryTopic!=null) {
+              glView.openCurrentMsgInBrowser(currentEntryTopic);
+            }
+            dismissDialog(id);
+          } 
+        });
+      }
+
+      // Send by Mail
+      Button btnEmail = (Button)menuDialog.findViewById(R.id.buttonOpenEmail);
+      if(btnEmail!=null) {
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) { 
+            if(Config.LOGD) Log.i(LOGTAG, "btnEmail currentEntryTopic="+currentEntryTopic);
+            if(currentEntryTopic!=null && currentEntryTopic.title!=null) {
+              Intent sendMailIntent = new Intent(Intent.ACTION_SEND);
+              sendMailIntent.putExtra(Intent.EXTRA_SUBJECT, currentEntryTopic.channelName + ": " + ripTags(currentEntryTopic.title).substring(0,40)+"...");
+              sendMailIntent.putExtra(Intent.EXTRA_TEXT, ripTags(currentEntryTopic.title));
+              sendMailIntent.setType("message/rfc822");                       
+              startActivity(sendMailIntent);
+            }
+            dismissDialog(id);
+          } 
+        });
+      }
+
+      // Send by SMS
+      Button btnSMS = (Button)menuDialog.findViewById(R.id.buttonOpenSMS);
+      if(btnSMS!=null) {
+        btnSMS.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) { 
+            if(Config.LOGD) Log.i(LOGTAG, "btnSMS currentEntryTopic="+currentEntryTopic);
+            if(currentEntryTopic!=null) {
+              Uri smsUri = Uri.parse("smsto:");
+              Intent sendSmsIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
+              sendSmsIntent.putExtra("sms_body", currentEntryTopic.channelName + ": " + ripTags(currentEntryTopic.title));
+              //sendSmsIntent.setType("vnd.android-dir/mms-sms");
+              try {
+                startActivity(sendSmsIntent);
+              } catch(Exception ex) {
+                String errMsg = ex.getMessage();
+                Toast.makeText(context, errMsg, Toast.LENGTH_LONG).show();
+              }
+            }
+            dismissDialog(id);
+          } 
+        });
+      }
+
+//      // bluetooth
+//      Button btnBluetooth = (Button)menuDialog.findViewById(R.id.buttonOpenBluetooth);
+//      if(btnBluetooth!=null) {
+//        btnBluetooth.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) { 
+//              if(currentEntryTopic!=null) {
+//                // todo: must implement
+//                Toast.makeText(context, "bluetooth not yet implemented", Toast.LENGTH_LONG).show();
+//              }
+//              dismissDialog(id);
+//            } 
+//          }
+//        );
+//      }
+
+      // close
+      Button btnClose = (Button)menuDialog.findViewById(R.id.buttonClose);
+      if(btnClose!=null) {
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) { 
+              dismissDialog(id);
+            } 
+          }
+        );
+      }
+
+    } 
+    else
+    if(id==DIALOG_MORE) {
+      menuDialog.setContentView(R.layout.more_dialog);
+      menuDialog.findViewById(R.id.buttonLayout).setBackgroundDrawable(mBackgroundGradient);
 
       // browse Favorits
       Button btnBrowseFavorits = (Button)menuDialog.findViewById(R.id.buttonBrowseFavorits);
@@ -529,6 +526,19 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
         });
       }
 
+      // promote
+      Button btnPromote = (Button)menuDialog.findViewById(R.id.buttonPromote);
+      if(btnPromote!=null) {
+        btnPromote.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) { 
+            if(Config.LOGD) Log.i(LOGTAG, "onClick btnPromote");
+            showDialog(DIALOG_PROMOTE);
+            dismissDialog(id);
+          } 
+        });
+      }
+
+      // close
       Button btnClose = (Button)menuDialog.findViewById(R.id.buttonClose);
       if(btnClose!=null) {
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -537,6 +547,102 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
             } 
           }
         );
+      }
+    }
+    else
+    if(id==DIALOG_PROMOTE) {
+      if(Config.LOGD) Log.i(LOGTAG, "onCreateDialog id==DIALOG_PROMOTE setContentView(R.layout.promote_dialog)");
+      menuDialog = new Dialog(this,R.style.NoTitleDialog);
+      menuDialog.setContentView(R.layout.promote_dialog);
+
+      Button btnPromoteMail = (Button)menuDialog.findViewById(R.id.buttonPromoteMail);
+      if(btnPromoteMail!=null) {
+        btnPromoteMail.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) { 
+            if(Config.LOGD) Log.i(LOGTAG, "onClick btnPromoteMail");
+
+            Intent sendMailIntent = new Intent(Intent.ACTION_SEND);
+            sendMailIntent.putExtra(Intent.EXTRA_SUBJECT, "Just in... for Android");
+            sendMailIntent.putExtra(Intent.EXTRA_TEXT, "Free 'Just in...' 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin");
+            sendMailIntent.setType("message/rfc822");                       
+            startActivity(sendMailIntent);
+
+            dismissDialog(id);
+          } 
+        });
+      }
+
+      Button btnPromoteSMS = (Button)menuDialog.findViewById(R.id.buttonPromoteSMS);
+      if(btnPromoteSMS!=null) {
+        btnPromoteSMS.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) { 
+            if(Config.LOGD) Log.i(LOGTAG, "onClick btnPromoteSMS");
+
+            Uri smsUri = Uri.parse("smsto:");
+            Intent sendSmsIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
+            sendSmsIntent.putExtra("sms_body", "Free 'Just in...' 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin");
+            //sendSmsIntent.setType("vnd.android-dir/mms-sms");
+            try {
+              startActivity(sendSmsIntent);
+            } catch(Exception ex) {
+              String errMsg = ex.getMessage();
+              Toast.makeText(context, errMsg, Toast.LENGTH_LONG).show();
+            }
+
+            dismissDialog(id);
+          } 
+        });
+      }
+
+      Button btnPromoteTweet = (Button)menuDialog.findViewById(R.id.buttonPromoteTweet);
+      if(btnPromoteTweet!=null) {
+        btnPromoteTweet.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View view) { 
+            if(Config.LOGD) Log.i(LOGTAG, "onClick btnPromoteTweet");
+
+            if(serviceClientObject!=null) {
+              TickerServiceAbstract tickerService = serviceClientObject.getServiceObject();
+              TwitterServiceAbstract twitterService = (TwitterServiceAbstract)tickerService;
+              if(twitterService!=null) {
+                final Twitter twitter = twitterService.getTwitterObject();
+                if(twitter!=null) {
+                  final EditText editText = new EditText(context);
+                  int maxLength = 140;
+                  InputFilter[] FilterArray = new InputFilter[1];
+                  FilterArray[0] = new InputFilter.LengthFilter(maxLength);
+                  editText.setFilters(FilterArray);
+                  DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                      switch(which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                          String inputText = editText.getText().toString();
+                          try {
+                            twitter.updateStatus(inputText);
+                          } catch(twitter4j.TwitterException twex) {
+                            Log.e(LOGTAG, "FAILED on twitter.updateStatus() "+twex);
+                            Toast.makeText(context, twex.getMessage(), Toast.LENGTH_LONG).show();
+                          }
+                          break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                          break;
+                      }
+                    }
+                  };
+                  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                  alertDialogBuilder.setTitle("Tweet");
+                  //alertDialogBuilder.setMessage("");
+                  editText.setText("Free 'Just in...' 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin",TextView.BufferType.EDITABLE);
+                  // todo: should show length of message (or rather: 140 - number of characters)
+                  alertDialogBuilder.setView(editText);
+                  alertDialogBuilder.setPositiveButton("Send",dialogClickListener).setNegativeButton("Abort", dialogClickListener).show();
+                }
+              }
+            }
+
+            dismissDialog(id);
+          } 
+        });
       }
     }
 
