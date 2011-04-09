@@ -90,12 +90,12 @@ public class JsObject
   }
 
   public void setRenderHeight(int height) {     // called by JS
-    if(Config.LOGD) Log.i(LOGTAG,"inst="+instNumber+" setRenderHeight() "+height);
+    //if(Config.LOGD) Log.i(LOGTAG,"inst="+instNumber+" setRenderHeight() "+height);
     renderHeight = height;
   }
 
   public void setRenderHeight2(int height) {     // called by JS
-    if(Config.LOGD) Log.i(LOGTAG,"inst="+instNumber+" setRenderHeight2() "+height);
+    if(Config.LOGD) Log.i(LOGTAG,"inst="+instNumber+" setRenderHeight2() "+renderHeight+" to "+height);
     renderHeight = height;
   }
 

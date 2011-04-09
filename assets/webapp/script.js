@@ -65,7 +65,7 @@ function onload() {
 
 function onImageLoad() {
   var newTotalHeight = newMsgElement.offsetHeight;
-  console.log("onImageLoad() newMsgElement.offsetHeight="+newTotalHeight+" ----");
+  //console.log("onImageLoad() newMsgElement.offsetHeight="+newTotalHeight+" ----");
   window.JsObject.setRenderHeight2(newTotalHeight);
 }
 

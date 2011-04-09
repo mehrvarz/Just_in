@@ -779,7 +779,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
   @Override
   public boolean onScaleBegin(ScaleGestureDetector detector) {
     if(Config.LOGD) Log.i(LOGTAG, "onScaleBegin() getScaleFactor()="+detector.getScaleFactor());
-    return true;
+    return false;
   }
 
   @Override

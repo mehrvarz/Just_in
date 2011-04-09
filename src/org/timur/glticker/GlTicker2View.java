@@ -307,12 +307,71 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
     }
   }
 
+  float beginTargetEyeZ, prevTargetEyeZ, nextTargetEyeZ;
+
+  @Override
+  public boolean onScaleBegin(ScaleGestureDetector detector) {
+    if(Config.LOGD) Log.i(LOGTAG, "onScaleBegin() getScaleFactor()="+detector.getScaleFactor());
+
+    beginTargetEyeZ = targetEyeZ;
+    prevTargetEyeZ = -1f;
+    nextTargetEyeZ = -1f;
+
+    if(targetEyeZ<eyeZDefault) {
+      int nextIdx = MAX_BITMAPS - (int)((targetEyeZ+pageZdist)/pageZdist);
+      //if(Config.LOGD) Log.i(LOGTAG, String.format("switchPrevPage() eyeZ=%f targetEyeZ=%f currentEntryPos=%d nextIdx=%d InitNeeded[nextIdx]=%b", 
+      //                                             eyeZ,targetEyeZ,currentEntryPos,nextIdx,renderer.mRectangleVerticesInitNeeded[nextIdx]));
+      if(nextIdx>=0 && !renderer.mRectangleVerticesInitNeeded[nextIdx]) {
+        prevTargetEyeZ = targetEyeZ + pageZdist;
+        //if(Config.LOGD) Log.i(LOGTAG, String.format("switchPrevPage() eyeZ=%f targetEyeZ=%f eyeZDefault=%f DONE", eyeZ,targetEyeZ,eyeZDefault));
+      }
+    }
+
+    float eyezMin = eyeZDefault-(bitmapCount-1)*pageZdist;
+    if(targetEyeZ>eyezMin) {
+      int nextIdx = MAX_BITMAPS - (int)((targetEyeZ-pageZdist)/pageZdist);
+      //if(Config.LOGD) Log.i(LOGTAG, String.format("switchNextPage() eyeZ=%f targetEyeZ=%f currentEntryPos=%d nextIdx=%d", eyeZ,targetEyeZ,currentEntryPos,nextIdx));
+      if(nextIdx<MAX_BITMAPS && !renderer.mRectangleVerticesInitNeeded[nextIdx]) {
+        nextTargetEyeZ = targetEyeZ - pageZdist;
+      }
+    }
+
+    return true;
+  }
+
   @Override
   public boolean onScale(ScaleGestureDetector detector) {
-    // nothing for now (this is sometimes accidently executed on my nexus one)
+    float scaleFactor = detector.getScaleFactor();
+    //if(Config.LOGD) Log.i(LOGTAG, "onScale() getScaleFactor()="+scaleFactor);
+
+    if(scaleFactor<1f) {
+      targetEyeZ = beginTargetEyeZ + (1f-scaleFactor)*pageZdist;
+    } else
+    if(scaleFactor>1f) {
+      if(scaleFactor>4f) scaleFactor=4f;
+      targetEyeZ = beginTargetEyeZ - scaleFactor*pageZdist/4f;
+    } else {
+      targetEyeZ = beginTargetEyeZ;
+    }
+
     return false;
   }
-  
+
+  @Override
+  public void onScaleEnd(ScaleGestureDetector detector) {
+    float scaleFactor = detector.getScaleFactor();
+    if(Config.LOGD) Log.i(LOGTAG, "onScaleEnd() getScaleFactor()="+scaleFactor);
+
+    if(scaleFactor<0.8f && prevTargetEyeZ>0f) {
+      targetEyeZ = prevTargetEyeZ;
+    } else
+    if(scaleFactor>1.55f && nextTargetEyeZ>0f) {
+      targetEyeZ = nextTargetEyeZ;
+    } else {
+      targetEyeZ = beginTargetEyeZ;
+    }
+  }
+
   @Override
   public boolean onFling(MotionEvent motionEvent1, MotionEvent motionEvent2, float gestureVelocityX, float gestureVelocityY) {
     // nothing for now (this is sometimes accidently executed on my nexus one)
