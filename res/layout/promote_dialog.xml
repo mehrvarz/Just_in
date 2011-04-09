@@ -46,7 +46,7 @@
         android:textColor="#eef"
         android:textStyle="bold"
         android:textSize="19sp"
-        android:text="Tell your friends about this app. Thank you!!"
+        android:text="Please promote this app. Thank you!!"
         android:layout_marginBottom="16px"
       />
       <TextView
@@ -58,7 +58,7 @@
         android:textColor="#eef"
         android:textStyle="bold"
         android:textSize="19sp"
-        android:text="Compose a message and send the download link:"
+        android:text="Compose a message containing a direct Android Market download link:"
         android:layout_marginBottom="16px"
       />
 

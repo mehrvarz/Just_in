@@ -555,6 +555,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
       menuDialog = new Dialog(this,R.style.NoTitleDialog);
       menuDialog.setContentView(R.layout.promote_dialog);
 
+      // promote mail
       Button btnPromoteMail = (Button)menuDialog.findViewById(R.id.buttonPromoteMail);
       if(btnPromoteMail!=null) {
         btnPromoteMail.setOnClickListener(new View.OnClickListener() {
@@ -563,7 +564,8 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
 
             Intent sendMailIntent = new Intent(Intent.ACTION_SEND);
             sendMailIntent.putExtra(Intent.EXTRA_SUBJECT, "Just in... for Android");
-            sendMailIntent.putExtra(Intent.EXTRA_TEXT, "'Just in...' free 3D Twitter reader in the Android Market\nhttp://market.android.com/details?id=org.timur.justin");
+            sendMailIntent.putExtra(Intent.EXTRA_TEXT, 
+              "Hi \ncheck this out...\n\nJust in... OpenGL Twitter reader free download from Android Market\nhttp://market.android.com/details?id=org.timur.justin\n");
             sendMailIntent.setType("message/rfc822");                       
             startActivity(sendMailIntent);
 
@@ -572,6 +574,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
         });
       }
 
+      // promote SMS
       Button btnPromoteSMS = (Button)menuDialog.findViewById(R.id.buttonPromoteSMS);
       if(btnPromoteSMS!=null) {
         btnPromoteSMS.setOnClickListener(new View.OnClickListener() {
@@ -580,7 +583,8 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
 
             Uri smsUri = Uri.parse("smsto:");
             Intent sendSmsIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
-            sendSmsIntent.putExtra("sms_body", "'Just in...' free 3D Twitter reader in the Android Market http://market.android.com/details?id=org.timur.justin");
+            sendSmsIntent.putExtra("sms_body", 
+              "Just in... OpenGL Twitter reader free DL from Android Market http://market.android.com/details?id=org.timur.justin");
             //sendSmsIntent.setType("vnd.android-dir/mms-sms");
             try {
               startActivity(sendSmsIntent);
@@ -594,6 +598,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
         });
       }
 
+      // promote tweet
       Button btnPromoteTweet = (Button)menuDialog.findViewById(R.id.buttonPromoteTweet);
       if(btnPromoteTweet!=null) {
         btnPromoteTweet.setOnClickListener(new View.OnClickListener() {
@@ -632,7 +637,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
                   AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                   alertDialogBuilder.setTitle("Tweet");
                   //alertDialogBuilder.setMessage("");
-                  editText.setText("'Just in...' free #3D #Twitter reader in the #Android Market http://market.android.com/details?id=org.timur.justin",TextView.BufferType.EDITABLE);
+                  editText.setText("'Just in...' #OpenGL #Twitter reader free DL from #Android Market http://market.android.com/details?id=org.timur.justin",TextView.BufferType.EDITABLE);
                   // todo: should show length of message (or rather: 140 - number of characters)
                   alertDialogBuilder.setView(editText);
                   alertDialogBuilder.setPositiveButton("Send",dialogClickListener).setNegativeButton("Abort", dialogClickListener).show();
