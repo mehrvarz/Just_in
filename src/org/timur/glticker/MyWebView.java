@@ -38,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.LinearLayout;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.webkit.WebView;
@@ -93,10 +94,12 @@ public class MyWebView extends WebView
   private static FrameLayout frameLayout = null;
   private static GlTickerView mView = null;
   private static int[] pxls;
+  private static Context context;
 
   MyWebView(Context context, LinkedList<EntryTopic> setMessageList, int instNumber)		// context = GlTicker Activity
   {
     super(context);
+    this.context = context;
     messageList = setMessageList;
     this.instNumber = instNumber;
     //if(Config.LOGD) Log.i(LOGTAG, "new JsObject(this)...");
@@ -120,7 +123,12 @@ public class MyWebView extends WebView
   public static void setWantetWebviewDimensions(int setWantedWidth, int setWantedHeight) {
     webViewWantedWidth = setWantedWidth;
     webViewWantedHeight = setWantedHeight;
-    pxls = new int[webViewWantedWidth*webViewWantedHeight];
+    pxls = new int[webViewWantedWidth*(webViewWantedHeight+200)]; 
+    // +200 to prevent 
+    // java.lang.ArrayIndexOutOfBoundsException
+    // at android.graphics.Bitmap.checkPixelsAccess(Bitmap.java:920)
+    // at android.graphics.Bitmap.getPixels(Bitmap.java:862)
+    // at org.timur.glticker.MyWebView$3.takeSnapshot(MyWebView.java:296)
   }
   
   public static void setMaxRenderHeight(int setMaxRenderHeight) {
@@ -279,31 +287,32 @@ public class MyWebView extends WebView
 
             //if(Config.LOGD) Log.i(LOGTAG,String.format("inst=%d takeSnapshot() newBitmapHeight=%d  webView.getWidth()=%d webView.getHeight()=%d",
             //  inst,newBitmapHeight,webView.getWidth(),webView.getHeight(),((MyWebView)webView).jsObject.renderHeight));
-            
-            Bitmap bitmap = Bitmap.createBitmap(newBitmapWidth, newBitmapHeight, Bitmap.Config.ARGB_8888);
-            if(bitmap==null) {
-              Log.e(LOGTAG, "takeSnapshot() Bitmap.createBitmap() returned null");
-              return null;
-            }
 
-            Canvas canvas = new Canvas(bitmap);
-            picture.draw(canvas);
-
-            {    
-              // create transparent black background
-              // whenever the color of a pixel is full black in the webview-bitmap, we will set it's opacity to '0' as well, this makes black transparent
-              //if(Config.LOGD) Log.d(LOGTAG, "takeSnapshot() create transparent black for "+newBitmapWidth+" x "+newBitmapHeight+" bytes");
-              bitmap.getPixels(pxls, 0, newBitmapWidth, 0, 0, newBitmapWidth, newBitmapHeight);
-              for(int xa=0, len=pxls.length; xa<len; xa++) {
-                if((pxls[xa] & 0x00FFFFFF)==0x000000) {  
-                  // we got ARGB format: if RGB are all 00 (black), we set alpha to 00
-                  //pxls[xa] = 0x80000000;    // half transparent
-                  pxls[xa] = 0x40000000;      // 3-quarter transparent
-                  //pxls[xa] = 0x00000000;    // full transparent
-                }
+            try {            
+              Bitmap bitmap = Bitmap.createBitmap(newBitmapWidth, newBitmapHeight, Bitmap.Config.ARGB_8888);
+              if(bitmap==null) {
+                Log.e(LOGTAG, "takeSnapshot() Bitmap.createBitmap() returned null");
+                return null;
               }
-              bitmap.setPixels(pxls, 0, newBitmapWidth, 0, 0, newBitmapWidth, newBitmapHeight);
-            }
+
+              Canvas canvas = new Canvas(bitmap);
+              picture.draw(canvas);
+
+              {    
+                // create transparent black background
+                // whenever the color of a pixel is full black in the webview-bitmap, we will set it's opacity to '0' as well, this makes black transparent
+                //if(Config.LOGD) Log.d(LOGTAG, "takeSnapshot() create transparent black for "+newBitmapWidth+" x "+newBitmapHeight+" bytes");
+                bitmap.getPixels(pxls, 0, newBitmapWidth, 0, 0, newBitmapWidth, newBitmapHeight);
+                for(int xa=0, len=pxls.length; xa<len; xa++) {
+                  if((pxls[xa] & 0x00FFFFFF)==0x000000) {  
+                    // we got ARGB format: if RGB are all 00 (black), we set alpha to 00
+                    //pxls[xa] = 0x80000000;    // half transparent
+                    pxls[xa] = 0x40000000;      // 3-quarter transparent
+                    //pxls[xa] = 0x00000000;    // full transparent
+                  }
+                }
+                bitmap.setPixels(pxls, 0, newBitmapWidth, 0, 0, newBitmapWidth, newBitmapHeight);
+              }
 
 
             //if(Config.LOGD) Log.d(LOGTAG, "takeSnapshot() bitmap.getHeight="+bitmap.getHeight()+" bitmap.getWidth="+bitmap.getWidth()+" density="+bitmap.getDensity()+" hasAlpha="+bitmap.hasAlpha());
@@ -328,8 +337,13 @@ public class MyWebView extends WebView
 //                         e.printStackTrace();
 //                      }
 
-            //if(Config.LOGD) Log.d(LOGTAG, "takeSnapshot() done");
-            return bitmap;
+              //if(Config.LOGD) Log.d(LOGTAG, "takeSnapshot() done");
+              return bitmap;
+
+            } catch(Exception ex) {
+              Log.e(LOGTAG, "takeSnapshot() exception "+ex);
+              Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
           }
         }
         return null;
