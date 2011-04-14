@@ -60,8 +60,8 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
 
   ///////////////////////////////////////////////////////////////// options menu
 
-  public static final int MENU_HELP = 10;
   public static final int MENU_NEW_TWEET = 11;
+  public static final int MENU_HELP = 10;
 
   @Override 
   public boolean onCreateOptionsMenu(Menu menu) {
