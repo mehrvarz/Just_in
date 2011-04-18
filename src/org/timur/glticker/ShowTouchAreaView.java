@@ -98,7 +98,7 @@ public class ShowTouchAreaView extends RelativeLayout {
     buttonsHidden = false;
   }
 
-  protected void showButtons(boolean showFlag) {
+  public void showButtons(boolean showFlag) {
     if(showFlag) {
       if(buttonsHidden) {
         showButtonView.setVisibility(View.VISIBLE);

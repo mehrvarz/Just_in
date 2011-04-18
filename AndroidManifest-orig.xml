@@ -16,7 +16,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.timur.justin"
           android:versionCode="16"
-          android:versionName="2.1.1 - $buildtime">
+          android:versionName="2.2 - $buildtime">
   <application android:label="Just in"
                android:icon="@drawable/app_icon">
     <activity android:name=".JustInActivity"
@@ -25,7 +25,6 @@
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
-        <!--action android:name="com.vodafone.twitter.service.TwitterNewEntry" /-->
         <action android:name="org.timur.JustInBroadcast" />
       </intent-filter>
     </activity>

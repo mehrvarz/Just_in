@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import android.widget.Button;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.text.InputFilter;
+import android.os.SystemClock;
 
 import org.timur.glticker.TickerServiceAbstract;
 import org.timur.glticker.GlTickerView;
@@ -60,20 +62,20 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
 
   ///////////////////////////////////////////////////////////////// options menu
 
-  public static final int MENU_HELP = 10;
-  public static final int MENU_NEW_TWEET = 11;
-
   @Override 
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(Menu.NONE, MENU_NEW_TWEET, Menu.NONE, "New Tweet");
-    menu.add(Menu.NONE, MENU_HELP, Menu.NONE, "Help");
-    return super.onCreateOptionsMenu(menu);
+    MenuInflater menuInflater = getMenuInflater();
+    menuInflater.inflate(R.menu.option_menu, menu);
+    return true;
   }
 
   @Override 
   public boolean onOptionsItemSelected(MenuItem item) {
+    if(showTouchAreaView!=null)
+      showTouchAreaView.showButtons(false);
+
     switch (item.getItemId()) {
-      case MENU_NEW_TWEET:
+      case R.id.MENU_NEW_TWEET:
         if(serviceClientObject!=null) {
           TickerServiceAbstract tickerService = serviceClientObject.getServiceObject();
           TwitterServiceAbstract twitterService = (TwitterServiceAbstract)tickerService;
@@ -112,11 +114,44 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
         }
         return true;
 
-      case MENU_HELP:
+      case R.id.MENU_HELP:
         GlTickerView.openInBrowser("http://timur.mobi/justin-app/");
         return true;
+
+      case R.id.MENU_AUTO_FORWARD:
+        if(glView!=null) {
+          if(glView.autoForward)
+            glView.autoForward = false;
+          else
+            glView.autoForward = true;
+          if(Config.LOGD) Log.i(LOGTAG, "onOptionsItemSelected() autoForward="+glView.autoForward);
+        }
+        return true;
+
+      case R.id.MENU_TOUCHAREAS:
+        if(showTouchAreaView!=null) {
+          if(showTouchAreaViewActiveSince==0l) {
+            showTouchAreaView.showButtons(true);
+            showTouchAreaViewActiveSince = SystemClock.uptimeMillis();
+          } else {
+            showTouchAreaView.showButtons(false);
+            showTouchAreaViewActiveSince = 0l;
+          }
+        }
+        return true;
+        
+      case R.id.MENU_PROCESS_MSG:
+        if(Config.LOGD) Log.i(LOGTAG, "onOptionsItemSelected() -> showDialog(DIALOG_USE_MSG)");
+        showDialog(DIALOG_USE_MSG);
+        return true;
+
+      case R.id.MENU_MORE:
+        showDialog(DIALOG_MORE);
+        return true;
     }
-    return super.onOptionsItemSelected(item);
+
+    //return super.onOptionsItemSelected(item);
+    return false;
   }
 
 
