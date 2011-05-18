@@ -94,7 +94,7 @@ public class JsObject
     renderHeight = height;
   }
 
-  public void setRenderHeight2(int height) {     // called by JS
+  public void setRenderHeight2(int height) {     // called by JS onImageLoad()
     if(Config.LOGD) Log.i(LOGTAG,"inst="+instNumber+" setRenderHeight2() "+renderHeight+" to "+height);
     renderHeight = height;
   }
