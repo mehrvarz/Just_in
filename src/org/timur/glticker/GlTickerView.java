@@ -1296,8 +1296,29 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
       else 
       if(targetEyeX!=eyeX) {
         eyeX=targetEyeX;
+        targetEyeX = 0f;
+        targetEyeY = 0f;
       }
       currentMoveXDirection = eyeX - lastEyeX;
+
+
+      float lastEyeY = eyeY;
+      if(Math.abs(targetEyeY-eyeY)>0.001) {
+        eyeY += (targetEyeY-eyeY)*0.011f;
+        //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeY="+eyeY);
+        mustForceGlDraw = true;
+      } else 
+      if(targetEyeY!=eyeY) {
+        eyeY=targetEyeY;
+        targetEyeX = 0f;
+        targetEyeY = 0f;
+      }
+
+      lastMoveYDirection = currentMoveYDirection;
+      currentMoveYDirection = eyeY - lastEyeY;
+
+
+
 
 /* */
       float lastEyeZ = eyeZ;
@@ -1323,9 +1344,9 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
       } else
       if(eyeZ!=targetEyeZ) {
         eyeZ=targetEyeZ;
-        System.gc(); // after the animation has finished may be a good time to get some garbage out
+        //System.gc(); // after the animation has finished may be a good time to get some garbage out
       }
-      
+
       lastMoveZDirection = currentMoveZDirection;
       currentMoveZDirection = eyeZ - lastEyeZ;
 /* */
@@ -1425,21 +1446,9 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
         }
       }
 */
-      // todo: would be nice to have spring effects also for the y-axis
 
-      float lastEyeY = eyeY;
-      if(Math.abs(targetEyeY-eyeY)>0.001) {
-        eyeY += (targetEyeY-eyeY)*0.011f;
-        //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeY="+eyeY);
-        mustForceGlDraw = true;
-      } else 
-      if(targetEyeY!=eyeY) {
-        eyeY=targetEyeY;
-      }
 
       
-      lastMoveYDirection = currentMoveYDirection;
-      currentMoveYDirection = eyeY - lastEyeY;
 
 
           // sandbox / safty-belt

@@ -171,7 +171,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract
     if(Config.LOGD) Log.i(LOGTAG, "onResume() -------------------------------------------");
     super.onResume(); 
     if(GyroscopeManager.isSupported()) {
-      float threshold = 0.5f;
+      float threshold = 0.0f;
       int interval = 0;
       AccelerometerManager.startListening(this,this,threshold,interval);
 /*
@@ -189,12 +189,29 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract
   public void onAccelerationChanged(float x, float y, float z) {
     //if(Config.LOGD) Log.i(LOGTAG, "onAccelerationChanged() x="+(x-lastX)+" y="+(y-lastY)+" z="+(z-lastZ));
 
-    // set Accelerometer driven X/Y movement in OpenGL
-    glView.targetEyeX += (x-lastX);
-    glView.targetEyeY += (y-lastY);
+/*
+    // activating Accelerometer driven X/Y movement into OpenGL rendering
+    float xMove = x-lastX;
+    if(Math.abs(xMove)>2f) {
+      if(xMove>2f) 
+        xMove=2f;
+      else
+        xMove=-2f;
+    }
+    
+    float yMove = y-lastY;
+    if(Math.abs(yMove)>2f) {
+      if(yMove>2f) 
+        yMove=2f;
+      else
+        yMove=-2f;
+    }
+    glView.targetEyeX += xMove;
+    glView.targetEyeY += yMove;
+*/
 
 /*
-//  GyroscopeManager
+    // activating GyroscopeManager driven X/Y movement into OpenGL rendering
     glView.targetEyeX += (y-lastY);
     glView.targetEyeY -= (x-lastX);
 */
