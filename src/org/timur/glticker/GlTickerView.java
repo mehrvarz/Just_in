@@ -340,6 +340,8 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
     //checkEglError("After setEGLConfigChooser", egl);
 
     init2();
+    
+    // todo: can we start reading x/y-sensors (accelerometer) here, to influence targetEyeX/targetEyeY
   }
 
   protected void init2() {
@@ -1440,7 +1442,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
       currentMoveYDirection = eyeY - lastEyeY;
 
 
-          // kindergarden / safty-belt
+          // sandbox / safty-belt
           boolean eyeXFixed=false;
           float maxX =  2.4f;
           float minX = -2.4f;

@@ -44,7 +44,8 @@ import org.timur.glticker.GlTickerView;
 import com.vodafone.twitter.service.TwitterServiceAbstract;
 import twitter4j.*;
 
-public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
+public class JustInActivity extends org.timur.glticker.GlActivityAbstract
+                            implements AccelerometerListener {
 
   @Override
   protected void setAppConfig() {
@@ -154,6 +155,56 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
     return false;
   }
 
+  @Override 
+  public void onPause() {
+    if(Config.LOGD) Log.i(LOGTAG, "onPause() -------------------------------------------");
+    super.onPause();
+    
+    if(AccelerometerManager.isListening())
+        AccelerometerManager.stopListening();
+//    if(GyroscopeManager.isListening())
+//        GyroscopeManager.stopListening();
+  }
+
+  @Override 
+  protected void onResume() {
+    if(Config.LOGD) Log.i(LOGTAG, "onResume() -------------------------------------------");
+    super.onResume(); 
+    if(GyroscopeManager.isSupported()) {
+      float threshold = 1f;
+      int interval = 100;
+      AccelerometerManager.startListening(this,this,threshold,interval);
+/*
+      float threshold = 2f;
+      int interval = 300;
+      GyroscopeManager.startListening(this,this,threshold,interval);
+*/
+    }
+  }
+
+  private float lastX = 0;
+  private float lastY = 0;
+  private float lastZ = 0;
+
+  public void onAccelerationChanged(float x, float y, float z) {
+    //if(Config.LOGD) Log.i(LOGTAG, "onAccelerationChanged() x="+(x-lastX)+" y="+(y-lastY)+" z="+(z-lastZ));
+
+    // set Accelerometer driven X/Y movement in OpenGL
+    glView.targetEyeX += (x-lastX)/2;
+    glView.targetEyeY += (y-lastY)/2;
+
+/*
+//  GyroscopeManager
+    glView.targetEyeX += (y-lastY);
+    glView.targetEyeY -= (x-lastX);
+*/
+
+    if(Config.LOGD) Log.i(LOGTAG, "onAccelerationChanged() x="+(x-lastX)+" y="+(y-lastY)+" z="+(z-lastZ)+"  tX="+glView.targetEyeX+" ty="+glView.targetEyeY);
+
+    lastX = x;
+    lastY = y;
+    lastZ = z;
+  }
 
   ///////////////////////////////////////////////////////////////// popup menu
 
