@@ -1288,30 +1288,30 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 //        targetEyeX = eyeX = cameraParticle.position().x();
       } 
       else
-      if(Math.abs(targetEyeX-eyeX)>0.001) {
-        eyeX += (targetEyeX-eyeX)*0.011f;
+      if(Math.abs(targetEyeX-eyeX)>0.01) {
+        eyeX += (targetEyeX-eyeX)*0.015f;
         //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeX="+eyeX);
         frameCountNonPhysic++;
       } 
       else 
       if(targetEyeX!=eyeX) {
         eyeX=targetEyeX;
-        targetEyeX = 0f;
-        targetEyeY = 0f;
+        //targetEyeX = 0f;
+        //targetEyeY = 0f;
       }
       currentMoveXDirection = eyeX - lastEyeX;
 
 
       float lastEyeY = eyeY;
-      if(Math.abs(targetEyeY-eyeY)>0.001) {
-        eyeY += (targetEyeY-eyeY)*0.011f;
+      if(Math.abs(targetEyeY-eyeY)>0.01) {
+        eyeY += (targetEyeY-eyeY)*0.015f;
         //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeY="+eyeY);
         mustForceGlDraw = true;
       } else 
       if(targetEyeY!=eyeY) {
         eyeY=targetEyeY;
-        targetEyeX = 0f;
-        targetEyeY = 0f;
+        //targetEyeX = 0f;
+        //targetEyeY = 0f;
       }
 
       lastMoveYDirection = currentMoveYDirection;
