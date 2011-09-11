@@ -155,38 +155,22 @@ public class AccelerometerManager {
             x = event.values[0];
             y = event.values[1];
             z = event.values[2];
-/*
-            // if not interesting in shake events
-            // just remove the whole if then else bloc
-            if (lastUpdate == 0) {
-                lastUpdate = now;
-                lastShake = now;
-                lastX = x;
-                lastY = y;
-                lastZ = z;
-            } else {
-*/
-                timeDiff = now - lastUpdate;
-                if (timeDiff > 0) {
-                    force = Math.abs(x + y + z - lastX - lastY - lastZ); 
+
+            timeDiff = now - lastUpdate;
+            if (timeDiff >= interval) {
+                force = Math.abs(x + y + z - lastX - lastY - lastZ); 
 
 //    if(Config.LOGD) Log.i(LOGTAG, "sensorEventListener force="+force+" threshold="+threshold+" tdiff="+timeDiff+" interval="+interval);
 
-                    if (force > threshold) {
-                        if (timeDiff >= interval) {
-                            // trigger change event
-                            listener.onAccelerationChanged(x, y, z);
-                            lastX = x;
-                            lastY = y;
-                            lastZ = z;
-                            lastUpdate = now;
-                        }
-
-                    }
+                if (force > threshold) {
+                    // trigger change event
+                    listener.onAccelerationChanged(x, y, z);
+                    lastX = x;
+                    lastY = y;
+                    lastZ = z;
+                    lastUpdate = now;
                 }
-/*
             }
-*/
         }
  
     };
