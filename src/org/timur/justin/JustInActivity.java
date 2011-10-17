@@ -44,7 +44,8 @@ import org.timur.glticker.GlTickerView;
 import com.vodafone.twitter.service.TwitterServiceAbstract;
 import twitter4j.*;
 
-public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
+public class JustInActivity extends org.timur.glticker.GlActivityAbstract
+                            implements AccelerometerListener {
 
   @Override
   protected void setAppConfig() {
@@ -154,6 +155,73 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract {
     return false;
   }
 
+  @Override 
+  public void onPause() {
+    if(Config.LOGD) Log.i(LOGTAG, "onPause() -------------------------------------------");
+    super.onPause();
+    
+    if(AccelerometerManager.isListening())
+        AccelerometerManager.stopListening();
+//    if(GyroscopeManager.isListening())
+//        GyroscopeManager.stopListening();
+  }
+
+  @Override 
+  protected void onResume() {
+    if(Config.LOGD) Log.i(LOGTAG, "onResume() -------------------------------------------");
+    super.onResume(); 
+    if(GyroscopeManager.isSupported()) {
+      float threshold = 0.0f;
+      int interval = 0;
+      AccelerometerManager.startListening(this,this,threshold,interval);
+/*
+      float threshold = 2f;
+      int interval = 300;
+      GyroscopeManager.startListening(this,this,threshold,interval);
+*/
+    }
+  }
+
+  private float lastX = 0;
+  private float lastY = 0;
+  private float lastZ = 0;
+
+  public void onAccelerationChanged(float x, float y, float z) {
+    //if(Config.LOGD) Log.i(LOGTAG, "onAccelerationChanged() x="+(x-lastX)+" y="+(y-lastY)+" z="+(z-lastZ));
+
+/*
+    // activating Accelerometer driven X/Y movement into OpenGL rendering
+    float xMove = x-lastX;
+    if(Math.abs(xMove)>2f) {
+      if(xMove>2f) 
+        xMove=2f;
+      else
+        xMove=-2f;
+    }
+    
+    float yMove = y-lastY;
+    if(Math.abs(yMove)>2f) {
+      if(yMove>2f) 
+        yMove=2f;
+      else
+        yMove=-2f;
+    }
+    glView.targetEyeX += xMove;
+    glView.targetEyeY += yMove;
+*/
+
+/*
+    // activating GyroscopeManager driven X/Y movement into OpenGL rendering
+    glView.targetEyeX += (y-lastY);
+    glView.targetEyeY -= (x-lastX);
+*/
+
+//    if(Config.LOGD) Log.i(LOGTAG, "onAccelerationChanged() x="+(x-lastX)+" y="+(y-lastY)+" z="+(z-lastZ)+"  tX="+glView.targetEyeX+" ty="+glView.targetEyeY);
+
+    lastX = x;
+    lastY = y;
+    lastZ = z;
+  }
 
   ///////////////////////////////////////////////////////////////// popup menu
 

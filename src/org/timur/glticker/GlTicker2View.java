@@ -583,7 +583,6 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
     return false; 
   }
 
-
   protected class Renderer2 extends Renderer implements GLSurfaceView.Renderer {
 
     public Renderer2(String fragmentShader, String vertexShader) {

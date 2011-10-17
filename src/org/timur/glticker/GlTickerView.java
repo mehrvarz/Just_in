@@ -340,6 +340,8 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
     //checkEglError("After setEGLConfigChooser", egl);
 
     init2();
+    
+    // todo: can we start reading x/y-sensors (accelerometer) here, to influence targetEyeX/targetEyeY
   }
 
   protected void init2() {
@@ -1286,16 +1288,37 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 //        targetEyeX = eyeX = cameraParticle.position().x();
       } 
       else
-      if(Math.abs(targetEyeX-eyeX)>0.001) {
-        eyeX += (targetEyeX-eyeX)*0.011f;
+      if(Math.abs(targetEyeX-eyeX)>0.01) {
+        eyeX += (targetEyeX-eyeX)*0.015f;
         //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeX="+eyeX);
         frameCountNonPhysic++;
       } 
       else 
       if(targetEyeX!=eyeX) {
         eyeX=targetEyeX;
+        //targetEyeX = 0f;
+        //targetEyeY = 0f;
       }
       currentMoveXDirection = eyeX - lastEyeX;
+
+
+      float lastEyeY = eyeY;
+      if(Math.abs(targetEyeY-eyeY)>0.01) {
+        eyeY += (targetEyeY-eyeY)*0.015f;
+        //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeY="+eyeY);
+        mustForceGlDraw = true;
+      } else 
+      if(targetEyeY!=eyeY) {
+        eyeY=targetEyeY;
+        //targetEyeX = 0f;
+        //targetEyeY = 0f;
+      }
+
+      lastMoveYDirection = currentMoveYDirection;
+      currentMoveYDirection = eyeY - lastEyeY;
+
+
+
 
 /* */
       float lastEyeZ = eyeZ;
@@ -1321,9 +1344,9 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
       } else
       if(eyeZ!=targetEyeZ) {
         eyeZ=targetEyeZ;
-        System.gc(); // after the animation has finished may be a good time to get some garbage out
+        //System.gc(); // after the animation has finished may be a good time to get some garbage out
       }
-      
+
       lastMoveZDirection = currentMoveZDirection;
       currentMoveZDirection = eyeZ - lastEyeZ;
 /* */
@@ -1423,24 +1446,12 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
         }
       }
 */
-      // todo: would be nice to have spring effects also for the y-axis
 
-      float lastEyeY = eyeY;
-      if(Math.abs(targetEyeY-eyeY)>0.001) {
-        eyeY += (targetEyeY-eyeY)*0.011f;
-        //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeY="+eyeY);
-        mustForceGlDraw = true;
-      } else 
-      if(targetEyeY!=eyeY) {
-        eyeY=targetEyeY;
-      }
 
       
-      lastMoveYDirection = currentMoveYDirection;
-      currentMoveYDirection = eyeY - lastEyeY;
 
 
-          // kindergarden / safty-belt
+          // sandbox / safty-belt
           boolean eyeXFixed=false;
           float maxX =  2.4f;
           float minX = -2.4f;
