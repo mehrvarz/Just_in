@@ -281,10 +281,11 @@ public abstract class GlActivityAbstract extends Activity
                 if(SystemClock.uptimeMillis()-lastJingleTime>10000l) {
                   MediaPlayer mediaPlayer = MediaPlayer.create(context, soundId); // non-alert
                   if(mediaPlayer!=null) {
-                    lastJingleTime = SystemClock.uptimeMillis();
                     mediaPlayer.start();
                   }
                 }
+
+                lastJingleTime = SystemClock.uptimeMillis();
 
                 ((GlActivityAbstract)context).runOnUiThread(new Runnable() {
                   public void run() {
