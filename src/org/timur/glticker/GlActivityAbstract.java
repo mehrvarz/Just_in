@@ -57,6 +57,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.SystemClock;
+import android.media.MediaPlayer;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -104,7 +105,8 @@ public abstract class GlActivityAbstract extends Activity
   protected long autoForwardDelay = 5000l;
   protected long autoScreenDimDelay = 11000l;
   public static Context context = null;
-  
+  static int soundId=0;
+  static boolean mustJingleNextTime=false;
 
   protected abstract void setAppConfig();
     //appname = "ThisJustIn";
@@ -135,6 +137,7 @@ public abstract class GlActivityAbstract extends Activity
     setContentView(frameLayout);
     View rootView = frameLayout.getRootView();
     rootView.setBackgroundColor(android.R.color.black);
+    soundId = org.timur.justin.R.raw.textboxbloop8bit;
 
     getMetrics("onCreate");
 
@@ -273,6 +276,16 @@ public abstract class GlActivityAbstract extends Activity
                   mWakeLock.acquire();
                   //if(Config.LOGD) Log.i(LOGTAG,onCreate background thread SCREEN_BRIGHT_WAKE_LOCK");
                 }
+
+                // todo: this is partly wrong: it jingles on every move, not just when autoForward is restarted
+                if(mustJingleNextTime) {
+                  MediaPlayer mediaPlayer = MediaPlayer.create(context, soundId); // non-alert
+                  if(mediaPlayer!=null) {
+                    mustJingleNextTime=false;
+                    mediaPlayer.start();
+                  }
+                }
+
                 ((GlActivityAbstract)context).runOnUiThread(new Runnable() {
                   public void run() {
                     glView.zAnimStep = glView.zAnimStepSlow;
@@ -280,7 +293,9 @@ public abstract class GlActivityAbstract extends Activity
                   }
                 });
               }
-            }     
+            } else {
+              mustJingleNextTime=true;
+            }
 
             if(mWakeLock!=null && SystemClock.uptimeMillis()-lastCurrentVisibleUpdateMS > autoScreenDimDelay) {
               //if(Config.LOGD) Log.i(LOGTAG, "onCreate background thread SCREEN_BRIGHT_WAKE_LOCK OFF");

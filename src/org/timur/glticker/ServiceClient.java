@@ -352,7 +352,7 @@ public class ServiceClient implements ServiceClientInterface
       final String action = intent.getAction();
       //if(Config.LOGD) Log.i(LOGTAG, "BroadcastReceiver() onReceive() action="+action);
       if(/*!activityPaused &&*/ intentFilter!=null && intentFilter.equals(action)) {
-        //if(Config.LOGD) Log.i(LOGTAG, "BroadcastReceiver call pullUpdateFromServer()...");
+        if(Config.LOGD) Log.i(LOGTAG, "BroadcastReceiver call pullUpdateFromServer()...");
         pullUpdateFromServer();
       } else {
         if(Config.LOGD) Log.i(LOGTAG, "BroadcastReceiver intentFilter="+intentFilter+" NOT EQUAL action="+action);
