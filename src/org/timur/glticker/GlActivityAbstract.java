@@ -106,7 +106,7 @@ public abstract class GlActivityAbstract extends Activity
   protected long autoScreenDimDelay = 11000l;
   public static Context context = null;
   static int soundId=0;
-  static boolean mustJingleNextTime=false;
+  static long lastJingleTime=0l;
 
   protected abstract void setAppConfig();
     //appname = "ThisJustIn";
@@ -277,11 +277,11 @@ public abstract class GlActivityAbstract extends Activity
                   //if(Config.LOGD) Log.i(LOGTAG,onCreate background thread SCREEN_BRIGHT_WAKE_LOCK");
                 }
 
-                // todo: this is partly wrong: it jingles on every move, not just when autoForward is restarted
-                if(mustJingleNextTime) {
+                // todo: jingle only if last jingle is 10s or older time date
+                if(SystemClock.uptimeMillis()-lastJingleTime>10000l) {
                   MediaPlayer mediaPlayer = MediaPlayer.create(context, soundId); // non-alert
                   if(mediaPlayer!=null) {
-                    mustJingleNextTime=false;
+                    lastJingleTime = SystemClock.uptimeMillis();
                     mediaPlayer.start();
                   }
                 }
@@ -293,8 +293,6 @@ public abstract class GlActivityAbstract extends Activity
                   }
                 });
               }
-            } else {
-              mustJingleNextTime=true;
             }
 
             if(mWakeLock!=null && SystemClock.uptimeMillis()-lastCurrentVisibleUpdateMS > autoScreenDimDelay) {
