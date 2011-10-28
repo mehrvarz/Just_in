@@ -487,6 +487,7 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
       //if(Config.LOGD) Log.i(LOGTAG, String.format("onLongPress() motionEvent.getX()=%f getY()=%f y>75%, x>70% - actvate autoForward !!!",motionEvent.getX(),motionEvent.getY()));
       if(!autoForward) {
         autoForward = true;
+        ((GlActivityAbstract)context).lastJingleTime = SystemClock.uptimeMillis();
         if(currentPositionView!=null)
           ((GlActivityAbstract)context).runOnUiThread(new Runnable() {
             public void run() { currentPositionView.setNewerCount(-1); }

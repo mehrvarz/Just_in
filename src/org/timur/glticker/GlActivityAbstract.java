@@ -106,7 +106,7 @@ public abstract class GlActivityAbstract extends Activity
   protected long autoScreenDimDelay = 11000l;
   public static Context context = null;
   static int soundId=0;
-  static long lastJingleTime=0l;
+  public static long lastJingleTime=0l;
 
   protected abstract void setAppConfig();
     //appname = "ThisJustIn";
