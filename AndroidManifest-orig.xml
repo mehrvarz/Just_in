@@ -15,13 +15,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.timur.justin"
-<<<<<<< HEAD
-          android:versionCode="19"
-          android:versionName="2.4.1 - $buildtime">
-=======
           android:versionCode="20"
           android:versionName="2.4.2 - $buildtime">
->>>>>>> 73140e61c9811ddaf37c9d99612dfbe0cc7f25b7
   <application android:label="Just in"
                android:icon="@drawable/app_icon">
     <activity android:name=".JustInActivity"
