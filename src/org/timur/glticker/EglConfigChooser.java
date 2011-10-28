@@ -64,9 +64,11 @@ class EglConfigChooser implements GLSurfaceView.EGLConfigChooser {
     egl.eglChooseConfig(display, s_configAttribs2, null, 0, num_config);
 
     int numConfigs = num_config[0];
-
-    if(numConfigs <= 0)
+    if(numConfigs <= 0) {
+      // this happens when run in the browser
+      // todo: push a toast?
       throw new IllegalArgumentException("No configs match configSpec");
+    }
 
     // Allocate then read the array of minimally matching EGL configs
     EGLConfig[] configs = new EGLConfig[numConfigs];

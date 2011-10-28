@@ -1,0 +1,66 @@
+
+AlwaysOnTwitter Android Service
+===============================
+
+Info
+----
+
+- This is an Android service that connects to the Twitter streaming API
+
+- Includes a sample consumer (AlwaysOnTwitter.apk) making use of this service
+
+- Service receiving push messages from Twitter in wake and sleep mode
+
+- Service operates on 3G, 4G and WiFi
+
+- Connectivity will be maintained, when the physical network changes
+
+- OAuth support with automatic pin detection
+
+- Minimal use of energy, suitable for 24 hour operation
+
+- Makes use of http://twitter4j.org library (see libs/ folder)
+
+- Requires Android SDK version-7 as well as JDK 5/6 and Ant 1.8.2
+
+- Apache License Version 2.0 http://www.apache.org/licenses/LICENSE-2.0.html 
+
+
+Initial build setup
+-------------------
+
+$ cp local.properties.sample local.properties
+
+$ cp src/com/vodafone/twitter/client/Constants.java.sample src/com/vodafone/twitter/client/Constants.java
+
+- Adjust SDK path settings in "local.properties" if ncecessary
+
+- Enter your custom Twitter app CONSUMERKEY + CONSUMERSECRET in 
+  src/com/vodafone/twitter/client/Constants.java
+  
+  You can apply for these keys here: https://dev.twitter.com/anywhere/apps/new
+  
+- Please note that "local.properties" and "src/com/vodafone/twitter/client/Constants.java" 
+  should never be contributed back to code repository
+
+
+Building
+--------
+
+$ rm -rf bin gen && ant debug
+
+
+Installation and remote execution
+---------------------------------
+
+$ adb install -r bin/AlwaysOnTwitter-debug.apk && adb shell am start -a android.intent.action.MAIN -n com.vodafone.twitter/.client.AlwaysOnTwitter
+
+
+Viewing the logs at runtime
+---------------------------
+
+$ adb logcat |grep -E "AlwaysOnTwitter|TwitterService|OAuthActivity|AndroidRuntime|JavaBinder|dalvikvm|Twitter"
+
+
+
+

@@ -1,0 +1,10 @@
+AlwaysOnTwitterService/bin/
+AlwaysOnTwitterService/gen/
+bin/
+gen/
+AlwaysOnTwitterService/local.properties
+AlwaysOnTwitterService/src/com/vodafone/twitter/client/Constants.java
+AndroidManifest.xml
+local.properties
+src/org/timur/justin/Constants.java
+

@@ -125,6 +125,7 @@ public class JustInActivity extends org.timur.glticker.GlActivityAbstract
             glView.autoForward = false;
           else
             glView.autoForward = true;
+            lastJingleTime = SystemClock.uptimeMillis();
           if(Config.LOGD) Log.i(LOGTAG, "onOptionsItemSelected() autoForward="+glView.autoForward);
         }
         return true;
