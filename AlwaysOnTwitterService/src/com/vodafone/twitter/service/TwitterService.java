@@ -638,15 +638,25 @@ public class TwitterService extends TwitterServiceAbstract {
       return false;
     }
 
+    if(status.getInReplyToScreenName()!=null) {
+      if(Config.LOGD) Log.i(LOGTAG, "processStatus() InReplyTo - don't process");
+      return false;
+    }
+
+    //String inReplyToScreenName = status.getInReplyToScreenName();
+    //if(Config.LOGD) Log.i(LOGTAG, "processStatus() inReplyToScreenName="+inReplyToScreenName);
+
     boolean newMsgReceived = false;
     User user = status.getUser();
     String channelImageString = null;
-    try {
-      java.net.URI uri = user.getProfileImageURL().toURI();
-      channelImageString = uri.toString();
-    } catch(java.net.URISyntaxException uriex) {
-      Log.e(LOGTAG, String.format("ConnectThread processStatus() URISyntaxException %s ex=%s",user.getProfileImageURL().toString(),uriex));
-      errMsg = uriex.getMessage();
+    if(user!=null) {
+      try {
+        java.net.URI uri = user.getProfileImageURL().toURI();
+        channelImageString = uri.toString();
+      } catch(java.net.URISyntaxException uriex) {
+        Log.e(LOGTAG, String.format("ConnectThread processStatus() URISyntaxException %s ex=%s",user.getProfileImageURL().toString(),uriex));
+        errMsg = uriex.getMessage();
+      }
     }
     
     String title = status.getText();
@@ -654,6 +664,7 @@ public class TwitterService extends TwitterServiceAbstract {
       title = linkify(title,null,true); 
       // messageLink will contain the link-url
     }
+    
 
     long timeMs = status.getCreatedAt().getTime();     
     // make timeMs unique in our messageList
@@ -883,7 +894,7 @@ public class TwitterService extends TwitterServiceAbstract {
             if(processStatus(status)) {
               notifyClient();
             } else {
-              if(Config.LOGD) Log.i(LOGTAG, "onStatus() msg not processed");
+              //if(Config.LOGD) Log.i(LOGTAG, "onStatus() msg not processed");
             }
           }
 
