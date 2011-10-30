@@ -123,8 +123,9 @@ public class MyWebView extends WebView
   public static void setWantetWebviewDimensions(int setWantedWidth, int setWantedHeight) {
     webViewWantedWidth = setWantedWidth;
     webViewWantedHeight = setWantedHeight;
+    if(Config.LOGD) Log.i(LOGTAG, "setWantetWebviewDimensions alloc pxls[] intwebViewWantedWidth="+webViewWantedWidth+" webViewWantedHeight="+webViewWantedHeight+" (+200) bytes="+(webViewWantedWidth*(webViewWantedHeight+200)));
     pxls = new int[webViewWantedWidth*(webViewWantedHeight+200)]; 
-    // +200 to prevent 
+    // +200 to prevent
     // java.lang.ArrayIndexOutOfBoundsException
     // at android.graphics.Bitmap.checkPixelsAccess(Bitmap.java:920)
     // at android.graphics.Bitmap.getPixels(Bitmap.java:862)
@@ -265,6 +266,7 @@ public class MyWebView extends WebView
             // the bitmap was not added (this is not an error on the very 1st snapshot)
             Log.e(LOGTAG, "onNewPicture entryTopic/title empty after takeSnapshot()");
           }
+          //bitmap.recycle(); bitmap=null;
         } else {
           // the bitmap was not added
           Log.e(LOGTAG, "onNewPicture bitmap=null after takeSnapshot()");
@@ -285,8 +287,6 @@ public class MyWebView extends WebView
             newBitmapHeight = Math.min(newBitmapHeight, ((MyWebView)webView).jsObject.renderHeight+5);   // renderHeight = the actual used height
             newBitmapHeight = Math.max(newBitmapHeight,webView.getHeight());
 
-            //if(Config.LOGD) Log.i(LOGTAG,String.format("inst=%d takeSnapshot() newBitmapHeight=%d  webView.getWidth()=%d webView.getHeight()=%d",
-            //  inst,newBitmapHeight,webView.getWidth(),webView.getHeight(),((MyWebView)webView).jsObject.renderHeight));
 
             try {            
               Bitmap bitmap = Bitmap.createBitmap(newBitmapWidth, newBitmapHeight, Bitmap.Config.ARGB_8888);
@@ -294,6 +294,10 @@ public class MyWebView extends WebView
                 Log.e(LOGTAG, "takeSnapshot() Bitmap.createBitmap() returned null");
                 return null;
               }
+
+
+              if(Config.LOGD) Log.i(LOGTAG,String.format("inst=%d takeSnapshot() newBitmapHeight=%d webView.getWidth()=%d webView.getHeight()=%d renderheight=%d lineBytes=%d",
+                inst,newBitmapHeight,webView.getWidth(),webView.getHeight(),((MyWebView)webView).jsObject.renderHeight,bitmap.getRowBytes()));
 
               Canvas canvas = new Canvas(bitmap);
               picture.draw(canvas);

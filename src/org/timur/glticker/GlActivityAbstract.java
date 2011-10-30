@@ -137,7 +137,8 @@ public abstract class GlActivityAbstract extends Activity
     setContentView(frameLayout);
     View rootView = frameLayout.getRootView();
     rootView.setBackgroundColor(android.R.color.black);
-    soundId = org.timur.justin.R.raw.textboxbloop8bit;
+  //soundId = org.timur.justin.R.raw.textboxbloop8bit;
+    soundId = org.timur.justin.R.raw.confirm8bit;
 
     getMetrics("onCreate");
 
