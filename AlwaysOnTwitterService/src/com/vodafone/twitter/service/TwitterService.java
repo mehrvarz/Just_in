@@ -56,6 +56,7 @@ import android.os.IBinder;
 import android.os.BatteryManager;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.os.SystemClock;
 
 import twitter4j.*;
 import twitter4j.conf.*;
@@ -558,7 +559,7 @@ public class TwitterService extends TwitterServiceAbstract {
           if(alarmManager==null)
             alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
           alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 
-                                    System.currentTimeMillis() + (600*1000),        // 1st wakeup in 10 minutes (=600*1000) from now
+                                    SystemClock.uptimeMillis() + (600*1000),        // 1st wakeup in 10 minutes (=600*1000) from now
                                     480*1000,                                       // followed up every 8 minutes (=480*1000)
                                     pendingIntent);
 

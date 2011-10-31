@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -128,7 +129,7 @@ public class AlwaysOnTwitter extends ListActivity {
             Log.e(LOGTAG, "onServiceConnected() no interface to service, mService==null");
             Toast.makeText(context, "Error - failed to get service interface from binder", Toast.LENGTH_LONG).show();
           } else {
-            startServiceTime = System.currentTimeMillis();
+            startServiceTime = SystemClock.uptimeMillis();
           }
         }
 
@@ -186,8 +187,9 @@ public class AlwaysOnTwitter extends ListActivity {
     if(mService!=null) {
       mService.onResume(); // -> if not connected, and no ConnectThread is pending, then start a new connectThread (which will fetch the timeline)
 
-      if(Config.LOGD) Log.i(LOGTAG, "onResume isConnected="+mService.isConnected()+" currentMs="+System.currentTimeMillis()+" startServiceTime="+startServiceTime+" diff="+(System.currentTimeMillis()-startServiceTime));
-      if(mService.isConnected() && System.currentTimeMillis()-startServiceTime>3000l) {
+      if(Config.LOGD) Log.i(LOGTAG, "onResume isConnected="+mService.isConnected()+" currentMs="+SystemClock.uptimeMillis()+" startServiceTime="+startServiceTime+" diff="+(SystemClock.uptimeMillis()-startServiceTime));
+
+      if(mService.isConnected() && SystemClock.uptimeMillis()-startServiceTime>3000l) {
         int readCount = pullUpdateFromService();
         if(Config.LOGD) Log.i(LOGTAG, "onResume service isConnected; readCount="+readCount+" from pullUpdateFromServer()");
       }

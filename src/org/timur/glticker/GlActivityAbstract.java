@@ -102,10 +102,9 @@ public abstract class GlActivityAbstract extends Activity
   protected volatile boolean activityResumed = false;
   private Method webkitPause = null, webkitResume = null;
   protected static volatile long lastCurrentVisibleUpdateMS = 0l;
-  protected long autoForwardDelay = 5000l;
-  protected long autoScreenDimDelay = 11000l;
+  protected long autoForwardDelay = 6000l;
+  protected long autoScreenDimDelay = 15000l;
   public static Context context = null;
-  static int soundId=0;
   public static long lastJingleTime=0l;
 
   protected abstract void setAppConfig();
@@ -137,8 +136,6 @@ public abstract class GlActivityAbstract extends Activity
     setContentView(frameLayout);
     View rootView = frameLayout.getRootView();
     rootView.setBackgroundColor(android.R.color.black);
-  //soundId = org.timur.justin.R.raw.textboxbloop8bit;
-    soundId = org.timur.justin.R.raw.confirm8bit;
 
     getMetrics("onCreate");
 
@@ -279,8 +276,8 @@ public abstract class GlActivityAbstract extends Activity
                 }
 
                 // todo: jingle only if last jingle is 10s or older time date
-                if(SystemClock.uptimeMillis()-lastJingleTime>10000l) {
-                  MediaPlayer mediaPlayer = MediaPlayer.create(context, soundId); // non-alert
+                if(SystemClock.uptimeMillis()-lastJingleTime>15000l) {
+                  MediaPlayer mediaPlayer = MediaPlayer.create(context, org.timur.justin.R.raw.confirm8bit); // non-alert
                   if(mediaPlayer!=null) {
                     mediaPlayer.start();
                   }
