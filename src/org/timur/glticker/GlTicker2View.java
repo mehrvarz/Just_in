@@ -78,7 +78,6 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
 
   @Override
   protected void init(boolean translucent, int depth, int stencil, int width, int height) {
-    if(Config.LOGD) Log.i(LOGTAG, "init()");
     renderer = null;
     bitmapCount = 0;
     pageZdist = 24f; // the distance of textures on the z-axis - must therefor adjust z-pos of renderer.mRectangleVertData0 in init2()
@@ -87,20 +86,24 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
     eyeZDefault = MAX_BITMAPS*pageZdist + defaultCamToTextureDistance;
     targetEyeZ = eyeZ = eyeZDefault;
 
+    if(Config.LOGD) Log.i(LOGTAG, "init() defaultCamToTextureDistance="+defaultCamToTextureDistance+" eyeZDefault="+eyeZDefault+" targetEyeZ="+targetEyeZ);
+
     int portraitWidth = width;
     int portraitHeight = height;
     if(portraitWidth>portraitHeight) {
       portraitWidth = height;
       portraitHeight = width;
     }
+    // portraitWidth: the width of the screen when held in portrait mode
 
     zNearDefault = 2.8f; // ideal for 480px width
     if(portraitWidth>480) {
-      zNearDefault += ((float)(portraitWidth-480)/600);   // (800-480)/600 = 320/600 = 0.5333
-    //zNearDefault += ((float)(portraitWidth-480)/200);   // (800-480)/600 = 320/600 = 0.5333
+      zNearDefault += ((float)(portraitWidth-480)/600);   // 2.8f+(800-480)/600 = 2.8f+320/600 = 2.8f+0.5333 = 3.3333
+    //zNearDefault += ((float)(portraitWidth-480)/200);   // 2.8f+(800-480)/600 = 2.8f+320/600 = 2.8f+0.5333 = 3.3333
     }
     if(Config.LOGD) Log.i(LOGTAG, "init() portraitWidth="+portraitWidth+" portraitHeight="+portraitHeight+" zNearDefault="+zNearDefault);
     zNear = zNearDefault;
+    // check onSurfaceChanged() where zNear might be modified as well
 
     zFarDefault  = 40f*pageZdist;
     zFar  = zFarDefault;
@@ -312,7 +315,7 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
 
   @Override
   public boolean onScaleBegin(ScaleGestureDetector detector) {
-    if(Config.LOGD) Log.i(LOGTAG, "onScaleBegin() getScaleFactor()="+detector.getScaleFactor());
+    //if(Config.LOGD) Log.i(LOGTAG, "onScaleBegin() getScaleFactor()="+detector.getScaleFactor());
 
     beginTargetEyeZ = targetEyeZ;
     prevTargetEyeZ = -1f;
@@ -361,7 +364,7 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
   @Override
   public void onScaleEnd(ScaleGestureDetector detector) {
     float scaleFactor = detector.getScaleFactor();
-    if(Config.LOGD) Log.i(LOGTAG, "onScaleEnd() getScaleFactor()="+scaleFactor);
+    //if(Config.LOGD) Log.i(LOGTAG, "onScaleEnd() getScaleFactor()="+scaleFactor);
 
     if(scaleFactor<0.8f && prevTargetEyeZ>0f) {
       targetEyeZ = prevTargetEyeZ;
@@ -382,7 +385,7 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
   @Override
   public boolean onSingleTapUp(MotionEvent motionEvent) {
     // Notified when a tap occurs with the up MotionEvent that triggered it.
-    if(Config.LOGD) Log.i(LOGTAG, "onSingleTapUp x="+motionEvent.getX()+" y="+motionEvent.getY());
+    //if(Config.LOGD) Log.i(LOGTAG, "onSingleTapUp x="+motionEvent.getX()+" y="+motionEvent.getY());
     if(GlActivityAbstract.showTouchAreaView.isButtonOpen((int)motionEvent.getX(),(int)motionEvent.getY())) {
       targetEyeX = 0;
       targetEyeY = 0;
@@ -714,7 +717,7 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
         }
 
         mRectangleVertices[i].position(RECTANGLE_VERTICES_DATA_UV_OFFSET);
-        GLES20.glVertexAttribPointer(maTextureHandle, 2, GLES20.GL_FLOAT, false, RECTANGLE_VERTICES_DATA_STRIDE_BYTES, mRectangleVertices[i]);
+        GLES20.glVertexAttribPointer(maTextureCoordHandle, 2, GLES20.GL_FLOAT, false, RECTANGLE_VERTICES_DATA_STRIDE_BYTES, mRectangleVertices[i]);
 
         // note: the writing too a file (further down) can take some time... and while this is happening 
         // a new item might get feed into takeSnapshot() and addBitmap()

@@ -1,9 +1,11 @@
 uniform mat4 uMVPMatrix; // camera/frustumM  (ModelViewProjectionMatrix) (same for all vertices)
+
 attribute vec4 vPosition; // x,y,z-values of the texture
-attribute vec2 aTextureCoord; // u,v-values of the texture
-varying vec2 vTextureCoord;
-varying float alpha;
-//varying float optDist;
+attribute vec2 aTextureCoord; // u,v-values of the texture    // from src/org/timur/glticker/GlTickerView.java
+// attribute float optDist;
+
+varying vec2 vTextureCoord;   // to fragment.sh
+varying float alpha;          // to fragment.sh
 
 void main() {
   gl_Position = uMVPMatrix * vPosition;
@@ -18,15 +20,20 @@ void main() {
   
   // alpha to be 1.0 at gl_Position.z 
 
-  float optDist = 15.0;
-  float camDist = min(gl_Position.z,63.0);
-  if(gl_Position.z <= optDist) {
-    // texture we look at is nearer or equal from optDist
-    alpha = min(23.0, 23.0 - abs(camDist - optDist)) / 23.0;
-  } else {
-    // texture we look at is further away from optDist
-    alpha = min(40.0, 40.0 - abs(camDist - optDist)) / 40.0;
-    if(alpha<0.25) alpha=0.25;
+  float optDist1 = 11.0;
+  float optDist2 = 14.0;
+
+  if(gl_Position.z <= optDist1) {   // the texture we look at... is nearer than optDist1
+    alpha = (gl_Position.z+4.0)/(optDist1+4.0);
+    if(alpha<0.05) alpha=0.05;
+
+  } else if(gl_Position.z <= optDist2) {   // the texture we look at... is nearer than optDist2
+    // the texture we look at... is <= optDist2 (nearer)
+    alpha = 1.0;
+
+  } else {   // the texture we look at... is further away than optDist1
+    alpha = (28.0 - min(28.0,gl_Position.z-optDist2)) / 28.0;
+    if(alpha<0.15) alpha=0.15;
   }
 }
 

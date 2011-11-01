@@ -117,12 +117,13 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
                                                                                  // for pageZdist=100: defaultCamToTextureDistance = pageZdist/8*3f
                                                                                  // for pageZdist=50:  defaultCamToTextureDistance = pageZdist/4*3f   
                                                                                  // for pageZdist=40:  defaultCamToTextureDistance = pageZdist/(4f/5f*4f)*3f   
-                                                                                 // todo: this logic is not totally clear - on galaxy this leads to non-optimal text rendering
+
+  // defaultCamToTextureDistance value is overrided by init() in GlTicker2
 
 //  protected static float pageZdist = 24f; // the distance of textures on the z-axis - must therefor adjust z-pos of renderer.mRectangleVertData0 in init2()
 //  protected static float defaultCamToTextureDistance = 8f; // inspired from webgl implementation
 
-  protected static float zNearDefault = 5.0f;
+  protected static float zNearDefault = 5.0f;   // overrided by init() in GlTicker2
   protected static float zNear = zNearDefault;
   protected static float zFarDefault = 6.0f * pageZdist;
   protected static float zFar = zFarDefault;
@@ -857,14 +858,15 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 */
 
     protected float[][] mRectangleVertData = null;
-    protected FloatBuffer[] mRectangleVertices = null;
+    protected FloatBuffer[] mRectangleVertices = null;    // values set in initBitmap()
     protected int[] textures = new int[MAX_BITMAPS];
     protected boolean  texturesInitialized = false;
     protected boolean[] mRectangleVerticesInitNeeded = null;
     protected volatile int verticesInitNeededCount=0;
 
     protected int gvPositionHandle;
-    protected int maTextureHandle;
+    protected int maTextureCoordHandle;
+//    protected int moptDistHandle;
     protected int muMVPMatrixHandle;
     protected float[] mVMatrix = new float[16];
     protected float[] mMVPMatrix = new float[16];
@@ -1009,7 +1011,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 //        // remaining() = the number of elements between the current position and the limit
 
 //        mRectangleVertices[i].position(RECTANGLE_VERTICES_DATA_UV_OFFSET);
-//        GLES20.glVertexAttribPointer(maTextureHandle, 2, GLES20.GL_FLOAT, false, RECTANGLE_VERTICES_DATA_STRIDE_BYTES, mRectangleVertices[i]); 
+//        GLES20.glVertexAttribPointer(maTextureCoordHandle, 2, GLES20.GL_FLOAT, false, RECTANGLE_VERTICES_DATA_STRIDE_BYTES, mRectangleVertices[i]); 
 
 //        // crisp or blury scaling
 //        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
@@ -1064,20 +1066,26 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
       GLES20.glUseProgram(mProgram);
       checkGlError("glUseProgram");
 
-      gvPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
+      gvPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");       // to vertex.sh
       checkGlError("glGetAttribLocation vPosition");
       //Log.i(LOGTAG, String.format("gvPositionHandle=%d", gvPositionHandle));
       if(gvPositionHandle == -1) {
         throw new RuntimeException("Could not get attrib location for vPosition");
       }
 
-      maTextureHandle = GLES20.glGetAttribLocation(mProgram, "aTextureCoord");
+      maTextureCoordHandle = GLES20.glGetAttribLocation(mProgram, "aTextureCoord");    // to vertex.sh
       checkGlError("glGetAttribLocation aTextureCoord");
-      //Log.i(LOGTAG, String.format("maTextureHandle=%d", maTextureHandle));
-      if(maTextureHandle == -1) {
+      //Log.i(LOGTAG, String.format("maTextureCoordHandle=%d", maTextureCoordHandle));
+      if(maTextureCoordHandle == -1) {
         throw new RuntimeException("Could not get attrib location for aTextureCoord");
       }
-
+/*
+      moptDistHandle = GLES20.glGetAttribLocation(mProgram, "optDist");    // to vertex.sh
+      checkGlError("glGetAttribLocation optDist");
+      if(moptDistHandle == -1) {
+        throw new RuntimeException("Could not get attrib location for optDist");
+      }
+*/
       muMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
       checkGlError("glGetUniformLocation uMVPMatrix");
       //Log.i(LOGTAG, String.format("muMVPMatrixHandle=%d", muMVPMatrixHandle));
@@ -1185,14 +1193,14 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
       float projectionBottom = -height/762f/2f / projectionFactor;
       if(Config.LOGD) Log.i(LOGTAG, String.format("onSurfaceChanged frustumM left=%f right=%f bottom=%f top=%f pageZdist=%f",
                                                    projectionLeft,projectionRight,projectionBottom,projectionTop,pageZdist));
-      if(width>height) {
-        //zNear=zNearDefault*1.20f; // landscape
-      //float landscapeZoomFactor = (1f + ((width-800)/24f)/100f);
+      if(width>height) { // landscape mode
+        //float landscapeZoomFactor = (1f + ((width-800)/24f)/100f);
         float landscapeZoomFactor = (1f + ((width-800)/8f)/100f);
         zNear = zNearDefault*landscapeZoomFactor;
         if(Config.LOGD) Log.i(LOGTAG, String.format("onSurfaceChanged landscapeZoomFactor=%f zNear=%f zNearDefault=%f",landscapeZoomFactor,zNear,zNearDefault));
       } else {
         zNear = zNearDefault; // portrait
+        if(Config.LOGD) Log.i(LOGTAG, String.format("onSurfaceChanged portrait zNear=%f ",zNear));
       }
 
       Matrix.frustumM(mProjMatrix, 0, // offset
@@ -1262,7 +1270,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
       }
 
       if(drawTicks>1l) {
-        if(Config.LOGD) Log.i(LOGTAG, String.format("onDrawFrame2 msSinceLastOnDrawFrame=%d drawTicks=%d",msSinceLastOnDrawFrame,drawTicks));
+        //if(Config.LOGD) Log.i(LOGTAG, String.format("onDrawFrame2 msSinceLastOnDrawFrame=%d drawTicks=%d",msSinceLastOnDrawFrame,drawTicks));
       }
 
       if(drawTicks<1l)
@@ -1604,12 +1612,21 @@ if(lastOnDrawFrameMs==0l) {
             // u,v-values of "mRectangleVertices[i]" will be send to the vertext shader as "attribute vec2 aTextureCoord"
             // und dann als "varying vec2 vTextureCoord" in den fragment shader kopiert
             mRectangleVertices[i].position(RECTANGLE_VERTICES_DATA_UV_OFFSET);
-            GLES20.glVertexAttribPointer(maTextureHandle, 2, GLES20.GL_FLOAT, false, RECTANGLE_VERTICES_DATA_STRIDE_BYTES, mRectangleVertices[i]); // takes time 22% of onDrawFrame2()
-            //checkGlError("glVertexAttribPointer maTextureHandle");
+            GLES20.glVertexAttribPointer(maTextureCoordHandle, 2, GLES20.GL_FLOAT, false, RECTANGLE_VERTICES_DATA_STRIDE_BYTES, mRectangleVertices[i]); // takes time 22% of onDrawFrame2()
+            //checkGlError("glVertexAttribPointer maTextureCoordHandle");
           }
 
-          GLES20.glEnableVertexAttribArray(maTextureHandle);    // accessible as 'aTextureCoord' in shader
-          checkGlError("glEnableVertexAttribArray maTextureHandle");
+          GLES20.glEnableVertexAttribArray(maTextureCoordHandle);    // accessible as 'aTextureCoord' in vertex shader
+          checkGlError("glEnableVertexAttribArray maTextureCoordHandle");
+
+/*
+ //mLifetimeLoc = GLES20.glGetAttribLocation(mProgramObject, "a_lifetime");
+ 
+          GLES20.glVertexAttribPointer(maTextureCoordHandle, 1, GLES20.GL_FLOAT, false, RECTANGLE_VERTICES_DATA_STRIDE_BYTES, mRectangleVertices[i]); // takes time 22% of onDrawFrame2()
+
+          GLES20.glEnableVertexAttribArray(moptDistHandle);    // accessible as 'optDist' in vertex shader
+          checkGlError("glEnableVertexAttribArray moptDistHandle");
+*/
         }
 
         frameCountDirty++;

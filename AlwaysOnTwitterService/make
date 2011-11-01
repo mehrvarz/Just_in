@@ -1,2 +1,3 @@
-rm -rf bin gen && ant debug
+#rm -rf bin gen && ant debug
+ant debug
 

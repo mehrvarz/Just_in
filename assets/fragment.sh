@@ -1,8 +1,8 @@
 precision mediump float;
-varying vec2 vTextureCoord;
 uniform sampler2D sTexture;
 
-varying float alpha;
+varying vec2 vTextureCoord;   // from vertex.sh
+varying float alpha;          // from vertex.sh
 
 //uniform float time;
 //uniform vec2 resolution;
