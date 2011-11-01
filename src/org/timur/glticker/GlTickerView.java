@@ -113,12 +113,12 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 
   protected static float pageZdist = 40f; // the distance of textures on the z-axis
 
-  protected static float defaultCamToTextureDistance = pageZdist/(4f/5f*4f)*3f;  // for pageZdist=200: defaultCamToTextureDistance = pageZdist/16*3f
-                                                                                 // for pageZdist=100: defaultCamToTextureDistance = pageZdist/8*3f
-                                                                                 // for pageZdist=50:  defaultCamToTextureDistance = pageZdist/4*3f   
-                                                                                 // for pageZdist=40:  defaultCamToTextureDistance = pageZdist/(4f/5f*4f)*3f   
-
-  // defaultCamToTextureDistance value is overrided by init() in GlTicker2
+  protected static float defaultCamToTextureDistance = pageZdist/(4f/5f*4f)*3f;  
+  //  for pageZdist=200: defaultCamToTextureDistance = pageZdist/16*3f
+  //  for pageZdist=100: defaultCamToTextureDistance = pageZdist/8*3f
+  //  for pageZdist=50:  defaultCamToTextureDistance = pageZdist/4*3f   
+  //  for pageZdist=40:  defaultCamToTextureDistance = pageZdist/(4f/5f*4f)*3f   
+  // note: defaultCamToTextureDistance value is overrided by init() in GlTicker2
 
 //  protected static float pageZdist = 24f; // the distance of textures on the z-axis - must therefor adjust z-pos of renderer.mRectangleVertData0 in init2()
 //  protected static float defaultCamToTextureDistance = 8f; // inspired from webgl implementation
@@ -1297,7 +1297,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 //        targetEyeX = eyeX = cameraParticle.position().x();
       } 
       else
-      if(Math.abs(targetEyeX-eyeX)>0.003) {
+      if(Math.abs(targetEyeX-eyeX)>0.002) {
         eyeX += (targetEyeX-eyeX)*0.015f;
         //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeX="+eyeX);
         frameCountNonPhysic++;
@@ -1312,7 +1312,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 
 
       float lastEyeY = eyeY;
-      if(Math.abs(targetEyeY-eyeY)>0.003) {
+      if(Math.abs(targetEyeY-eyeY)>0.002) {
         eyeY += (targetEyeY-eyeY)*0.015f;
         //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeY="+eyeY);
         mustForceGlDraw = true;

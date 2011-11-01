@@ -11,29 +11,26 @@ void main() {
   gl_Position = uMVPMatrix * vPosition;
   vTextureCoord = aTextureCoord;
   
-  // gl_Position.z is the distance between the cam and the next texture
-  // if it is roughly = defaultCamToTextureDistance =50/4*3, then we apply full opacity
+  // gl_Position.z is the distance between the cam and the next message-texture
+  // if it is roughly = defaultCamToTextureDistance - zNear = 21.2 - 2.8, then we apply full opacity
   // if the distance is smaller or bigger, we apply less opacity
   // we do so by handing over varying alpha to the fragment shader
   // note: vPosition.z = mRectangleVertData[i][2] 
-  // note: if(cam.z - vPosition.z < pageZdist/4*3f) then apply less opacity
   
-  // alpha to be 1.0 at gl_Position.z 
-
   float optDist1 = 11.0;
   float optDist2 = 14.0;
 
   if(gl_Position.z <= optDist1) {   // the texture we look at... is nearer than optDist1
     alpha = (gl_Position.z+4.0)/(optDist1+4.0);
-    if(alpha<0.05) alpha=0.05;
+    if(alpha<0.03) alpha=0.03;
 
   } else if(gl_Position.z <= optDist2) {   // the texture we look at... is nearer than optDist2
     // the texture we look at... is <= optDist2 (nearer)
     alpha = 1.0;
 
   } else {   // the texture we look at... is further away than optDist1
-    alpha = (28.0 - min(28.0,gl_Position.z-optDist2)) / 28.0;
-    if(alpha<0.15) alpha=0.15;
+    alpha = (29.0 - min(29.0,gl_Position.z-optDist2)) / 29.0;
+    if(alpha<0.10) alpha=0.10;
   }
 }
 
