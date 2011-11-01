@@ -1297,7 +1297,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 //        targetEyeX = eyeX = cameraParticle.position().x();
       } 
       else
-      if(Math.abs(targetEyeX-eyeX)>0.01) {
+      if(Math.abs(targetEyeX-eyeX)>0.003) {
         eyeX += (targetEyeX-eyeX)*0.015f;
         //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeX="+eyeX);
         frameCountNonPhysic++;
@@ -1312,7 +1312,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
 
 
       float lastEyeY = eyeY;
-      if(Math.abs(targetEyeY-eyeY)>0.01) {
+      if(Math.abs(targetEyeY-eyeY)>0.003) {
         eyeY += (targetEyeY-eyeY)*0.015f;
         //if(Config.LOGD) Log.i(LOGTAG,"onDrawFrame2 animate eyeY="+eyeY);
         mustForceGlDraw = true;
