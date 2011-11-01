@@ -97,6 +97,7 @@ class GlTicker2View extends GlTickerView implements GestureDetector.OnGestureLis
     zNearDefault = 2.8f; // ideal for 480px width
     if(portraitWidth>480) {
       zNearDefault += ((float)(portraitWidth-480)/600);   // (800-480)/600 = 320/600 = 0.5333
+    //zNearDefault += ((float)(portraitWidth-480)/200);   // (800-480)/600 = 320/600 = 0.5333
     }
     if(Config.LOGD) Log.i(LOGTAG, "init() portraitWidth="+portraitWidth+" portraitHeight="+portraitHeight+" zNearDefault="+zNearDefault);
     zNear = zNearDefault;

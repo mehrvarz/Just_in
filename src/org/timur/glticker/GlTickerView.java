@@ -181,7 +181,7 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
   public GlTickerView(Context setContext) {
     super(setContext);
     context = setContext; 
-    if(Config.LOGD) Log.i(LOGTAG, "constructor(Context)");
+    if(Config.LOGD) Log.i(LOGTAG, "constructor() pageZdist="+pageZdist+" defaultCamToTextureDistance="+defaultCamToTextureDistance+" eyeZDefault="+eyeZDefault);
   }
 
   public GlTickerView(Context setContext, boolean translucent, int depth, int stencil, int width, int height) {
@@ -1187,9 +1187,10 @@ public class GlTickerView extends GLSurfaceView implements GestureDetector.OnGes
                                                    projectionLeft,projectionRight,projectionBottom,projectionTop,pageZdist));
       if(width>height) {
         //zNear=zNearDefault*1.20f; // landscape
-        float zoomFactor = (1f + ((width-800)/24f)/100f);
-        zNear = zNearDefault*zoomFactor;
-        if(Config.LOGD) Log.i(LOGTAG, String.format("onSurfaceChanged zoomFactor=%f zNear=%f zNearDefault=%f",zoomFactor,zNear,zNearDefault));
+      //float landscapeZoomFactor = (1f + ((width-800)/24f)/100f);
+        float landscapeZoomFactor = (1f + ((width-800)/8f)/100f);
+        zNear = zNearDefault*landscapeZoomFactor;
+        if(Config.LOGD) Log.i(LOGTAG, String.format("onSurfaceChanged landscapeZoomFactor=%f zNear=%f zNearDefault=%f",landscapeZoomFactor,zNear,zNearDefault));
       } else {
         zNear = zNearDefault; // portrait
       }

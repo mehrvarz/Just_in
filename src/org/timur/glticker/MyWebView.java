@@ -368,7 +368,7 @@ public class MyWebView extends WebView
           messageList.addFirst(entryTopic);
 
     myWebView.webViewError=false;
-    if(Config.LOGD) Log.i(LOGTAG, "startNextWebview() layout webViewWantedWidth="+webViewWantedWidth+" webViewWantedHeight="+webViewWantedHeight);
+    if(Config.LOGD) Log.i(LOGTAG, "startNextWebview() layout webViewWantedWidth="+webViewWantedWidth+" webViewWantedHeight="+webViewWantedHeight+" fetchUrlString="+fetchUrlString);
     myWebView.layout(0, 0, webViewWantedWidth, webViewWantedHeight);
     myWebView.loadUrl(fetchUrlString);
     // livecastServiceClient in the background will messageList.add()
