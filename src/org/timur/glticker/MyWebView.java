@@ -311,8 +311,8 @@ public class MyWebView extends WebView
                   if((pxls[xa] & 0x00FFFFFF)==0x000000) {  
                     // we got ARGB format: if RGB are all 00 (black), we set alpha to 00
                     //pxls[xa] = 0x80000000;    // half transparent
-                    pxls[xa] = 0x40000000;      // 3-quarter transparent
-                    //pxls[xa] = 0x00000000;    // full transparent
+                    //pxls[xa] = 0x40000000;      // 3-quarter transparent
+                    pxls[xa] = 0x00000000;    // full transparent
                   }
                 }
                 bitmap.setPixels(pxls, 0, newBitmapWidth, 0, 0, newBitmapWidth, newBitmapHeight);
